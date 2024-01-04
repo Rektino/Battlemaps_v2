@@ -1,0 +1,50 @@
+Pieces per player : 
+3 Warriors
+3 Archers
+2 Defenders
+2 Assassins
+1 Healer
+1 Mage 
+1 Sniper 
+1 Commander
+
+RULEBOOK : 
+
+How to win the game : Kill your opponent's commander, before they kill yours. Simple as that. 
+
+First, both players position their pieces without viewing the opponent's pieces. When both players are finished, the game starts: 
+The first player is chosen randomly. The board with all the pieces appear. 
+
+In each turn, a player has 3 total MOVES. Each MOVE is associated with a PIECE. Therefore, in each turn, a player will touch pieces 3 times
+total. Each piece, can normally do up to 3 actions in one turn : move, attack and once per game, activate its ability.These
+can be done in any order. It is not however mandatory to do all these actions, with the selected piece. Note that even if a player chooses to use 
+only one action of a certain piece, this will be counted as one move for this round.
+Exceptions occur when using a Piece's special ability, which may or may not allow for extra actions that round. 
+In each turn, a player is allowed to activate one (1) Piece's unique ability. The ability may last for this turn or for others as well,
+depending on the specific piece.
+
+When a piece is attacked, if it survives the attack, it will fight back provided that its enemy is within range. For example, if an archer
+shoots a warrior from distance, the warrior will never be able to deal back damage, but if the warrior attacks the archer from close range, 
+the archer will deal back damage. If the piece dies from the attack, no damage will be dealt back. 
+Also, ranged attacks cannot reach pieces that are behind other pieces, unless a special ability allows it. 
+
+Each piece has a unique ability, and some pieces may have passive effects as well. The passive effects are permanent, while the ability can be activated one time per game, for each piece. The abilities are the following : 
+
+
+Warrior : (Berserk) Can attack up to 3 times and move up to 3 times for this round, in any order. It is not mandatory to complete all actions.
+
+Archer :  (Heaven's shot) For this round, gain +1 range and you are able to attack a piece which stands behind another piece. 
+
+Defender : (Wall) For this round and your opponent's round, become invulnerable to any damage.
+
+Assassin : (Invisibility Cloak) Become invisible to your opponent's pieces, for their next 2 rounds, or until it attacks. The next attack will
+be a critical hit (+50% damage). 
+
+Sniper : (Deadly bullet) Gain +2 range. The next attack will be a critical hit (+50% damage).
+
+Mage : (Hellfire) Select any 2x2 area on the map. The area becomes burning, causing pieces that stand there at the end of your turn to 
+receive damage equal to 10% of their maximum health. 
+
+Healer : (Nature's touch) For this round only, it can heal 3 times. 
+
+Commander : (War cry) Buff all adjacent pieces (distance 1), increasing their damage by 20% for the rest of the game. 

@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Gameplay">
+      <UniqueIdentifier>{86dcff52-dffc-44a8-9197-f5025072c965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Players">
+      <UniqueIdentifier>{90715b65-c754-4f33-a27f-9211d8852b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Grid">
+      <UniqueIdentifier>{b2a4980b-892f-49a6-8b4e-b59135cb5ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screen">
+      <UniqueIdentifier>{25764456-cd17-42d7-990b-835a6dc92821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pieces">
+      <UniqueIdentifier>{1885d896-72d6-4d39-9611-1f0ee9925943}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\Event_interface.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid\Grid.cpp">
+      <Filter>Source Files\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screen\Screen.cpp">
+      <Filter>Source Files\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screen\ScreenManager.cpp">
+      <Filter>Source Files\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Players\Player1.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Players\Player2.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Archer.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Assassin.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Commander.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Defender.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Healer.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Mage.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Piece.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Sniper.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieces\Warrior.cpp">
+      <Filter>Source Files\Pieces</Filter>
+    </ClCompile>
+    <ClCompile Include="Point_2D.cpp">
+      <Filter>Source Files\Grid</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Gameplay\Event_interface.h">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Grid\Grid.h">
+      <Filter>Source Files\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screen\Screen.h">
+      <Filter>Source Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screen\ScreenManager.h">
+      <Filter>Source Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Players\Player1.h">
+      <Filter>Source Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Players\Player2.h">
+      <Filter>Source Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Archer.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Assassin.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Commander.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Defender.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Healer.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Mage.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Piece.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Sniper.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\Warrior.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="Point_2D.h">
+      <Filter>Source Files\Grid</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
