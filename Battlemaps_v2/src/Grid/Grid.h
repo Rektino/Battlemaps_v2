@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "cell.h"
 
-constexpr int GRID_SIZE_X = 18; 
-constexpr int GRID_SIZE_Y = 10;
 
 class Grid
 {
@@ -13,9 +12,10 @@ public :
 	float getCellPositionX(int x, int y); 
 	float getCellPositionY(int x, int y); 
 	sf::Vector2f get_position_vector2f(int x, int y); 
+	sf::Vector2f get_cell_size() { return cell_size; }
 private: 
 	sf::Vector2f cell_size; 
-	std::vector<std::vector<sf::RectangleShape>> cells;
-	
+	//std::vector<std::vector<sf::RectangleShape>> cells;
+	std::vector<std::vector<cell>> map; 	
 };
 

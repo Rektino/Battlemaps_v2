@@ -28,12 +28,12 @@
     <Filter Include="Source Files\Pieces">
       <UniqueIdentifier>{1885d896-72d6-4d39-9611-1f0ee9925943}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Widgets">
+      <UniqueIdentifier>{a84c6c0d-b828-4849-9bc2-047677b4905e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gameplay\Event_interface.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\Grid\Grid.cpp">
@@ -78,14 +78,20 @@
     <ClCompile Include="src\Pieces\Warrior.cpp">
       <Filter>Source Files\Pieces</Filter>
     </ClCompile>
-    <ClCompile Include="Point_2D.cpp">
+    <ClCompile Include="src\Grid\cell.cpp">
       <Filter>Source Files\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\Events_mouse_key.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\menu.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\button.cpp">
+      <Filter>Source Files\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Gameplay\Event_interface.h">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="src\Grid\Grid.h">
       <Filter>Source Files\Grid</Filter>
     </ClInclude>
@@ -128,8 +134,23 @@
     <ClInclude Include="src\Pieces\Warrior.h">
       <Filter>Source Files\Pieces</Filter>
     </ClInclude>
-    <ClInclude Include="Point_2D.h">
+    <ClInclude Include="src\Grid\cell.h">
       <Filter>Source Files\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieces\global_constants.h">
+      <Filter>Source Files\Pieces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay\Events_mouse_key.h">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay\menu.h">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\button.h">
+      <Filter>Source Files\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay\Battlemaps_v2.h">
+      <Filter>Source Files\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

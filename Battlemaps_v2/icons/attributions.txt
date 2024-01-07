@@ -6,3 +6,5 @@
 <a href="https://www.flaticon.com/free-icons/rifle" title="rifle icons">Rifle icons created by Georgy - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/spiritual" title="spiritual icons">Spiritual icons created by Lagot Design - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/finish" title="finish icons">Finish icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/list" title="list icons">List icons created by Chanut - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/help" title="help icons">Help icons created by Rendyudha - Flaticon</a>

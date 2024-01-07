@@ -1,5 +1,7 @@
 #pragma once
-class Screen
-{
-};
+//class Screen
+//{
+//public : 
+//	virtual void add_screen
+//};
 
