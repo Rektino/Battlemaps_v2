@@ -33,9 +33,15 @@ constexpr unsigned MENU_BTN_TEXT_SIZE = 45U;
 
 //File paths for fonts :
 
-const std::string font_paths[1] = {
-    "fonts/JosefinSans-SemiBold.ttf"
+const std::string font_paths[2] = {
+    "fonts/JosefinSans-SemiBold.ttf" ,
+    "fonts/JosefinSans-Bold.ttf"
 };
+
+const std::string icons_texture_paths[2] = {
+    "icons/menu_40.png" ,
+    "icons/help_40.png"
+}; 
 
 // File paths for the texture files
 const std::string p1_texturePaths[8] = {

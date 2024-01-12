@@ -33,11 +33,11 @@
     <ClCompile Include="src\Pieces\Piece.cpp" />
     <ClCompile Include="src\Pieces\Sniper.cpp" />
     <ClCompile Include="src\Pieces\Warrior.cpp" />
-    <ClCompile Include="src\Players\Player1.cpp" />
-    <ClCompile Include="src\Players\Player2.cpp" />
     <ClCompile Include="src\Screen\Screen.cpp" />
     <ClCompile Include="src\Screen\ScreenManager.cpp" />
     <ClCompile Include="src\Widgets\button.cpp" />
+    <ClCompile Include="src\Widgets\cursor_on_buttons.cpp" />
+    <ClCompile Include="src\Widgets\secondary_icons.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h" />
@@ -55,11 +55,11 @@
     <ClInclude Include="src\Pieces\Piece.h" />
     <ClInclude Include="src\Pieces\Sniper.h" />
     <ClInclude Include="src\Pieces\Warrior.h" />
-    <ClInclude Include="src\Players\Player1.h" />
-    <ClInclude Include="src\Players\Player2.h" />
     <ClInclude Include="src\Screen\Screen.h" />
     <ClInclude Include="src\Screen\ScreenManager.h" />
     <ClInclude Include="src\Widgets\button.h" />
+    <ClInclude Include="src\Widgets\cursor_on_buttons.h" />
+    <ClInclude Include="src\Widgets\secondary_icons.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

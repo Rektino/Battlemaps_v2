@@ -7,16 +7,23 @@ int main()
 {
     sf::VideoMode fullscreenMode = sf::VideoMode::getFullscreenModes()[0]; // Get the first available fullscreen mode
     sf::RenderWindow main_window(fullscreenMode, "BattleMaps", sf::Style::Close);    
-    Grid my_grid(main_window);     
-    menu game_menu(main_window , my_grid);    
+    Grid grid(main_window);     
+    Menu game_menu(grid);
+    Menu_icon menu_icon(main_window , grid) ;     
+    Help_icon help_icon(main_window, grid); 
+    Rulebook my_rulebook(grid);
     while (main_window.isOpen())
     {
         main_window.clear(sf::Color(255, 245, 220));
-        my_grid.draw(main_window);        
+        grid.draw(main_window); 
+        menu_icon.draw(main_window); 
+        help_icon.draw(main_window);
+        my_rulebook.draw(main_window); 
         if (game_menu.is_active()) {
             game_menu.draw(main_window); 
+            cursor_on_menu(main_window , grid , game_menu) ; 
         }        
-        main_window.display();
+        main_window.display();      
         sf::Event event; 
         while (main_window.pollEvent(event)) {  
             if (event.type == sf::Event::Closed) {

@@ -6,6 +6,7 @@
 #include <cassert>
 #include "Grid.h"
 
+
 class Button {
 public:
 	Button() ; 
@@ -20,7 +21,8 @@ public:
 	bool contains(sf::Vector2f position); 
 	void draw(sf::RenderWindow& window); 
 	sf::Vector2f getTextOffset(Grid& grid);
-private:
+	sf::FloatRect getGlobalBounds(); 
+private: 
 	sf::Font m_font; 
 	sf::Text text; 
 	sf::RectangleShape outline_rectangle; 	

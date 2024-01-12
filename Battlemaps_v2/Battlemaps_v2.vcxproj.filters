@@ -45,12 +45,6 @@
     <ClCompile Include="src\Screen\ScreenManager.cpp">
       <Filter>Source Files\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="src\Players\Player1.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Players\Player2.cpp">
-      <Filter>Source Files\Players</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pieces\Archer.cpp">
       <Filter>Source Files\Pieces</Filter>
     </ClCompile>
@@ -90,6 +84,12 @@
     <ClCompile Include="src\Widgets\button.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="src\Widgets\cursor_on_buttons.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\secondary_icons.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid\Grid.h">
@@ -100,12 +100,6 @@
     </ClInclude>
     <ClInclude Include="src\Screen\ScreenManager.h">
       <Filter>Source Files\Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Players\Player1.h">
-      <Filter>Source Files\Players</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Players\Player2.h">
-      <Filter>Source Files\Players</Filter>
     </ClInclude>
     <ClInclude Include="src\Pieces\Archer.h">
       <Filter>Source Files\Pieces</Filter>
@@ -151,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h">
       <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\cursor_on_buttons.h">
+      <Filter>Source Files\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\secondary_icons.h">
+      <Filter>Source Files\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

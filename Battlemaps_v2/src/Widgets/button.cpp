@@ -93,3 +93,8 @@ sf::Vector2f Button::getTextOffset(Grid& grid)
 	float diff_y = outline_rectangle.getGlobalBounds().height - text_height;
 	return (sf::Vector2f{ diff_x / 2.0f , diff_y / 2.0f }); 
 }
+
+sf::FloatRect Button::getGlobalBounds()
+{
+	return outline_rectangle.getGlobalBounds(); 
+}

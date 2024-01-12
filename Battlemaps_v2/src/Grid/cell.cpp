@@ -18,8 +18,8 @@ cell::cell(sf::RenderWindow& window ,int x, int y) : posX(x) , posY(y)
 		m_circle.setOutlineThickness(OUTLINE_THICKNESS);
 		m_circle.setOutlineColor(sf::Color::Black);
 		m_circle.setFillColor(sf::Color(165, 180, 255));
-		float rect_center_x = x * cell_size.x + m_rectangle.getGlobalBounds().width / 2.0;
-		float rect_center_y = y * cell_size.y + m_rectangle.getGlobalBounds().height / 2.0;
+		float rect_center_x = x * cell_size.x + m_rectangle.getGlobalBounds().width / 2.0f;
+		float rect_center_y = y * cell_size.y + m_rectangle.getGlobalBounds().height / 2.0f;
 		m_circle.setPosition(rect_center_x - CIRCLE_RADIUS, rect_center_y - CIRCLE_RADIUS);
 	}	
 	std::cout << "Created cell x,y = " << x << "," << y << " positioned at " << x * cell_size.x << " , " << y * cell_size.y << "\n"; 

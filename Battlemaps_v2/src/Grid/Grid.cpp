@@ -9,9 +9,7 @@ Grid::Grid(sf::RenderWindow& window) {
 	std::vector<cell> cell_row; 		
 	for (int y = 0; y < GRID_SIZE_Y; y++) {
 		for (int x = 0; x < GRID_SIZE_X; x++) {			
-			cell_row.emplace_back(cell(window , x , y));
-			/*std::cout << "Created the cell (x,y) = " << x << "," << y << " positioned at : " <<\
-				x * cell_size.x << " , " << y * cell_size.y << 	"\n";*/
+			cell_row.emplace_back(cell(window , x , y));			
 		}
 		map.emplace_back(cell_row); 
 		cell_row.clear(); 
@@ -49,6 +47,6 @@ float Grid::getCellPositionY(int x, int y)
 }
 
 sf::Vector2f Grid::get_position_vector2f(int x, int y)
-{
-	return sf::Vector2f();
+{	 
+	return sf::Vector2f{ getCellPositionX(x , y) ,  getCellPositionY(x , y) };
 }
