@@ -33,6 +33,8 @@
     <ClCompile Include="src\Pieces\Piece.cpp" />
     <ClCompile Include="src\Pieces\Sniper.cpp" />
     <ClCompile Include="src\Pieces\Warrior.cpp" />
+    <ClCompile Include="src\Players\Dashboard.cpp" />
+    <ClCompile Include="src\Players\Player.cpp" />
     <ClCompile Include="src\Screen\Screen.cpp" />
     <ClCompile Include="src\Screen\ScreenManager.cpp" />
     <ClCompile Include="src\Widgets\button.cpp" />
@@ -55,6 +57,8 @@
     <ClInclude Include="src\Pieces\Piece.h" />
     <ClInclude Include="src\Pieces\Sniper.h" />
     <ClInclude Include="src\Pieces\Warrior.h" />
+    <ClInclude Include="src\Players\Dashboard.h" />
+    <ClInclude Include="src\Players\Player.h" />
     <ClInclude Include="src\Screen\Screen.h" />
     <ClInclude Include="src\Screen\ScreenManager.h" />
     <ClInclude Include="src\Widgets\button.h" />

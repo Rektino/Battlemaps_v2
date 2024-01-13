@@ -2,12 +2,6 @@
 #include "Piece.h" 
 #include <cstdint>
 
-
-Piece::Piece(short int posX, short int posY, std::shared_ptr<sf::Sprite> sprite_ptr)
-	: m_x(posX),
-	m_y(posY),
-	sprite_ptr(sprite_ptr)
-{};
 //==========================================================================
 Piece::Piece() {
 	hp_bar.setOrigin(sf::Vector2f(HP_BAR_SIZE_X, HP_BAR_SIZE_Y));
@@ -35,15 +29,20 @@ Piece& Piece::move(sf::Vector2f newPos, int posX, int posY) {
 	m_x = posX;
 	m_y = posY;
 	//Write code to change the Sprites position to the correct Point_2d position within the map : 	
-	float sprite_radius_x = sprite_ptr->getGlobalBounds().width / 2;
-	float sprite_radius_y = sprite_ptr->getGlobalBounds().height / 2;
+	float sprite_radius_x = m_sprite->getGlobalBounds().width / 2;
+	float sprite_radius_y = m_sprite->getGlobalBounds().height / 2;
 	sf::Vector2f spritePos = { newPos.x - sprite_radius_x , newPos.y - sprite_radius_y };
 	sf::Vector2f hp_bar_pos = { spritePos.x + 3.0f * HP_BAR_OFFSET , spritePos.y + 15.0f };
 	hp_bar.setPosition(hp_bar_pos);
 	hp_outter.setPosition(hp_bar_pos);
-	sprite_ptr->setPosition(spritePos);
+	m_sprite->setPosition(spritePos);
 	return *this;
 }
+void Piece::draw(sf::RenderTarget& window)
+{
+	window.draw(*m_sprite); 
+}
+
 //==========================================================================
 // updates the hp bar rectangle size and color based on current HP and maximum hp of this piece
 void Piece::update_hp_bar()

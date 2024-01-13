@@ -17,7 +17,10 @@ constexpr int numMages = 1;
 constexpr int numHealers = 1;
 constexpr int numSnipers = 1;
 constexpr int numCommanders = 1;
+constexpr int numPieceTypes = 8; 
 constexpr int numPieces = numWarriors + numDefenders + numArchers + numMages + numAssassins + numSnipers + numHealers + numCommanders;
+constexpr int numPieces_array[] = { numWarriors , numDefenders ,numArchers , numMages , numAssassins , numSnipers , numHealers , numCommanders };
+
 
 //Grid : 
 constexpr int GRID_SIZE_X = 18; // Number of columns

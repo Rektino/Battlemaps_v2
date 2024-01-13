@@ -90,6 +90,12 @@
     <ClCompile Include="src\Widgets\secondary_icons.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="src\Players\Player.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Players\Dashboard.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid\Grid.h">
@@ -151,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="src\Widgets\secondary_icons.h">
       <Filter>Source Files\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Players\Player.h">
+      <Filter>Source Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Players\Dashboard.h">
+      <Filter>Source Files\Players</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,13 +12,21 @@ int main()
     Menu_icon menu_icon(main_window , grid) ;     
     Help_icon help_icon(main_window, grid); 
     Rulebook my_rulebook(grid);
+    Player player1(1, main_window, grid); 
+    player1.place_sprites(grid); 
+    Player player2(2, main_window, grid);
+    player2.place_sprites(grid); 
     while (main_window.isOpen())
     {
         main_window.clear(sf::Color(255, 245, 220));
         grid.draw(main_window); 
         menu_icon.draw(main_window); 
         help_icon.draw(main_window);
-        my_rulebook.draw(main_window); 
+        player1.draw(main_window, grid);
+        player2.draw(main_window, grid); 
+        if (my_rulebook.is_active()) {
+            my_rulebook.draw(main_window);
+        }        
         if (game_menu.is_active()) {
             game_menu.draw(main_window); 
             cursor_on_menu(main_window , grid , game_menu) ; 
@@ -33,6 +41,10 @@ int main()
             if (ESC_pressed(event)) {
                 std::cout << "ESCAPE key pressed\n"; 
                 game_menu.toggle_state();                 
+            }
+            if (H_pressed(event)) {
+                std::cout << "H key pressed\n"; 
+                my_rulebook.toggle_state(); 
             }
         }
     }
