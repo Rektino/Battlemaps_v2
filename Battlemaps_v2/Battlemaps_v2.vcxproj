@@ -19,9 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Events &amp; Mouse\mouse_hover.cpp" />
     <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp" />
     <ClCompile Include="src\Gameplay\Events_mouse_key.cpp" />
+    <ClCompile Include="src\Gameplay\game.cpp" />
     <ClCompile Include="src\Gameplay\menu.cpp" />
+    <ClCompile Include="src\Gameplay\randomize_pieces.cpp" />
     <ClCompile Include="src\Grid\cell.cpp" />
     <ClCompile Include="src\Grid\Grid.cpp" />
     <ClCompile Include="src\Pieces\Archer.cpp" />
@@ -38,13 +41,15 @@
     <ClCompile Include="src\Screen\Screen.cpp" />
     <ClCompile Include="src\Screen\ScreenManager.cpp" />
     <ClCompile Include="src\Widgets\button.cpp" />
-    <ClCompile Include="src\Widgets\cursor_on_buttons.cpp" />
     <ClCompile Include="src\Widgets\secondary_icons.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h" />
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h" />
     <ClInclude Include="src\Gameplay\Events_mouse_key.h" />
+    <ClInclude Include="src\Gameplay\game.h" />
     <ClInclude Include="src\Gameplay\menu.h" />
+    <ClInclude Include="src\Gameplay\randomize_pieces.h" />
     <ClInclude Include="src\Grid\cell.h" />
     <ClInclude Include="src\Grid\Grid.h" />
     <ClInclude Include="src\Pieces\Archer.h" />
@@ -62,7 +67,6 @@
     <ClInclude Include="src\Screen\Screen.h" />
     <ClInclude Include="src\Screen\ScreenManager.h" />
     <ClInclude Include="src\Widgets\button.h" />
-    <ClInclude Include="src\Widgets\cursor_on_buttons.h" />
     <ClInclude Include="src\Widgets\secondary_icons.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -152,7 +156,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\geode\Documents\SFML-2.6.0\include;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Grid;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Gameplay;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Pieces;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Players;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Screen;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\geode\Documents\SFML-2.6.0\include;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Grid;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Gameplay;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Pieces;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Players;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Screen;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Widgets;C:\Users\geode\Documents\VS projects GEO\Battlemaps_v2\Battlemaps_v2\src\Events &amp; Mouse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

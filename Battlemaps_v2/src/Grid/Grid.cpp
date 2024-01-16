@@ -1,6 +1,8 @@
 #include "Grid.h"
 #include <iostream>
 
+std::shared_ptr<Piece> Grid::selected_piece = nullptr; 
+
 Grid::Grid(sf::RenderWindow& window) {	
 	unsigned window_width = window.getSize().x;
 	unsigned window_height = window.getSize().y;
@@ -29,6 +31,15 @@ void Grid::draw(sf::RenderWindow& window)
 	}
 }
 
+void Grid::clean_map()
+{
+	for (auto& row : map) {
+		for (auto& cell : row) {
+			cell.clean(); 
+		}
+	}
+}
+
 std::vector<int> Grid::get_mouse_cell(sf::Window& window)
 {
 	return std::vector<int>();
@@ -49,4 +60,25 @@ float Grid::getCellPositionY(int x, int y)
 sf::Vector2f Grid::get_position_vector2f(int x, int y)
 {	 
 	return sf::Vector2f{ getCellPositionX(x , y) ,  getCellPositionY(x , y) };
+}
+
+void Grid::set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y)
+{
+	map.at(y).at(x).setPiece(piece);
+	return; 
+}
+
+void Grid::set_selected_piece(int posX, int posY)
+{
+	selected_piece = map.at(posX).at(posY).getPiece(); 
+}
+
+std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)
+{
+	auto piece = map.at(y).at(x).getPiece();
+	if (piece == nullptr) {
+		std::cerr << "Error : Null piece returned from get_piece_on_cell() !\n"; 
+		return nullptr; 
+	}
+	return piece; 
 }

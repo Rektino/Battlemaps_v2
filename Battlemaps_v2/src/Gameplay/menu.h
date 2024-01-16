@@ -11,6 +11,7 @@ public :
 	void draw(sf::RenderWindow& window); 
 	void toggle_state() { active = !active;  }
 	inline bool is_active() { return active;  }
+	bool contains(sf::Vector2f position_f); 
 	friend void cursor_on_menu(sf::RenderWindow& window, Grid& grid, Menu& game_menu);
 private : 	 	
 	sf::Font btn_font; 

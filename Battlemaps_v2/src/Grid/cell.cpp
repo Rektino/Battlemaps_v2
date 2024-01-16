@@ -45,3 +45,8 @@ float cell::getWidth()
 {
 	return m_rectangle.getGlobalBounds().height ; 
 }
+
+bool cell::contains(sf::Vector2f position_f)
+{
+	return (m_rectangle.getGlobalBounds().contains(position_f)) ;
+}

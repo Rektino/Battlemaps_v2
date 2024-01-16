@@ -84,9 +84,6 @@
     <ClCompile Include="src\Widgets\button.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="src\Widgets\cursor_on_buttons.cpp">
-      <Filter>Source Files\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="src\Widgets\secondary_icons.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
@@ -95,6 +92,15 @@
     </ClCompile>
     <ClCompile Include="src\Players\Dashboard.cpp">
       <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\randomize_pieces.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\game.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Events &amp; Mouse\mouse_hover.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +158,6 @@
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h">
       <Filter>Source Files\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="src\Widgets\cursor_on_buttons.h">
-      <Filter>Source Files\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="src\Widgets\secondary_icons.h">
       <Filter>Source Files\Widgets</Filter>
     </ClInclude>
@@ -163,6 +166,15 @@
     </ClInclude>
     <ClInclude Include="src\Players\Dashboard.h">
       <Filter>Source Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay\randomize_pieces.h">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay\game.h">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

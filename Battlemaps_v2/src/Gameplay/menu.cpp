@@ -6,13 +6,13 @@ Menu::Menu(Grid& grid)
 	active = false; 
 	resume_btn.setTextString("Resume");
 	resume_btn.setTextSize(MENU_BTN_TEXT_SIZE);	
-	resume_btn.setPosition(grid, sf::Vector2f{ grid.getCellPositionX(6,2) , grid.getCellPositionY(6,2) });	
+	resume_btn.setPosition(grid, grid.get_position_vector2f(6,2));	
 	sounds_btn.setTextString("Sounds");
 	sounds_btn.setTextSize(MENU_BTN_TEXT_SIZE); 
-	sounds_btn.setPosition(grid, sf::Vector2f{ grid.getCellPositionX(6,4) , grid.getCellPositionY(6,4) });
+	sounds_btn.setPosition(grid, grid.get_position_vector2f(6, 4));
 	rules_btn.setTextString("Rulebook");
 	rules_btn.setTextSize(MENU_BTN_TEXT_SIZE);
-	rules_btn.setPosition(grid, sf::Vector2f{ grid.getCellPositionX(6,6) ,  grid.getCellPositionY(6,6) });
+	rules_btn.setPosition(grid, grid.get_position_vector2f(6, 6));
 	buttons_created = true;
 }
 
@@ -26,6 +26,11 @@ void Menu::draw(sf::RenderWindow& window)
 	resume_btn.draw(window); 
 	sounds_btn.draw(window); 
 	rules_btn.draw(window); 	
+}
+
+bool Menu::contains(sf::Vector2f position_f)
+{	
+	return (resume_btn.contains(position_f) || sounds_btn.contains(position_f) || rules_btn.contains(position_f)) ;
 }
 
 //=================================================
@@ -72,3 +77,5 @@ void Rulebook::draw(sf::RenderWindow& window)
 	window.draw(title_piece_info); 
 	std::cout << "printed string : " << description << "\n"; 
 }
+
+

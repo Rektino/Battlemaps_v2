@@ -10,7 +10,7 @@
 class Button {
 public:
 	Button() ; 
-	Button(sf::RenderWindow& window , int x, int y, float width, float height, const char* text); 	
+	Button(sf::RenderWindow& window , Grid& grid , float width, float height, const char* text); 	
 	void setFont(sf::Font& font); 
 	void setTextSize(unsigned int size); 
 	void setTextString(const char* descr);	 

@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include "global_constants.h"
+#include "Grid.h"
+
 enum PieceType {
 	War,
 	Def,
@@ -18,9 +20,9 @@ enum PieceType {
 class Piece {
 protected:
 	Piece();
-	virtual ~Piece() = default;	
+	virtual ~Piece() = default;
 	//friend void drawPieces(sf::RenderTarget& window, std::vector<std::shared_ptr<Piece>>& player1_piece_vect, std::vector<std::shared_ptr<Piece>>& player2_piece_vect);
-public:
+public:	
 	int getX() const;
 	int getY() const;
 	void setX(short int);

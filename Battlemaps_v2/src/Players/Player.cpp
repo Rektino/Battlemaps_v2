@@ -89,7 +89,7 @@ void Player::create_pieces()
 	}
 }
 
-void Player::place_sprites(Grid& grid)
+void Player::place_pieces(Grid& grid)
 {
 	int i = 0; 
 	int y_offset = (m_id == 1 ? 1 : 7); 
@@ -97,8 +97,9 @@ void Player::place_sprites(Grid& grid)
 	for (auto& piece_ptr : m_pieces) {
 		int posX = 11 + (i % piecesPerRow);
 		int posY = y_offset + (i / piecesPerRow);
-		sf::Vector2f pos_float = { grid.getCellPositionX(posX, posY) , grid.getCellPositionY(posX, posY) };
+		sf::Vector2f pos_float ={ grid.get_position_vector2f(posX , posY)};
 		piece_ptr->move(pos_float, posX, posY);
+		grid.set_piece_on_cell(piece_ptr, posX, posY);
 		i++;
 	}
 }

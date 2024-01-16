@@ -35,7 +35,7 @@ Piece& Piece::move(sf::Vector2f newPos, int posX, int posY) {
 	sf::Vector2f hp_bar_pos = { spritePos.x + 3.0f * HP_BAR_OFFSET , spritePos.y + 15.0f };
 	hp_bar.setPosition(hp_bar_pos);
 	hp_outter.setPosition(hp_bar_pos);
-	m_sprite->setPosition(spritePos);
+	m_sprite->setPosition(spritePos);	
 	return *this;
 }
 void Piece::draw(sf::RenderTarget& window)

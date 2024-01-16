@@ -15,7 +15,7 @@ Button::Button() {
 	std::cout << "Default button created\n"; 
 }
 
-Button::Button(sf::RenderWindow& window, int x, int y, float width, float height, const char* descr)
+Button::Button(sf::RenderWindow& window, Grid& grid, float width, float height, const char* descr)
 {
 	float cell_size_x = static_cast<float>(window.getSize().x) / GRID_SIZE_X;
 	float cell_size_y = static_cast<float>(window.getSize().y) / GRID_SIZE_Y;
@@ -23,13 +23,11 @@ Button::Button(sf::RenderWindow& window, int x, int y, float width, float height
 	outline_rectangle.setOutlineThickness(2.0f); 
 	outline_rectangle.setFillColor(sf::Color::Yellow); 
 	outline_rectangle.setOutlineColor(sf::Color::Black); 
-	outline_rectangle.setSize(sf::Vector2f{ width , height }); 
-	outline_rectangle.setPosition(x * cell_size_x, y * cell_size_y);
+	outline_rectangle.setSize(sf::Vector2f{ width , height }); 	
 	text.setString(descr);
 	text.setCharacterSize(DEFAULT_CHAR_SIZE); 	 
 	text.setFont(m_font); 
-	text.setFillColor(sf::Color::Black); 
-	text.setPosition(x * cell_size_x, y * cell_size_y); 
+	text.setFillColor(sf::Color::Black); 	
 	std::cout << "Button created...\n";
 }
 
