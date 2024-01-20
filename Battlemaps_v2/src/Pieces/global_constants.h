@@ -88,6 +88,13 @@ const std::string soundPaths[11] = {
 
 };
 
+enum Event_states {
+    neutral , 
+    selected_piece,
+    moving_piece , 
+    released_piece
+};
+
 enum Game_states {
     placement,
     action,

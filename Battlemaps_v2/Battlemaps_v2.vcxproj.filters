@@ -102,6 +102,9 @@
     <ClCompile Include="src\Events &amp; Mouse\mouse_hover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Widgets\sounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Grid\Grid.h">
@@ -174,6 +177,9 @@
       <Filter>Source Files\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\sounds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

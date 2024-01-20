@@ -42,6 +42,7 @@
     <ClCompile Include="src\Screen\ScreenManager.cpp" />
     <ClCompile Include="src\Widgets\button.cpp" />
     <ClCompile Include="src\Widgets\secondary_icons.cpp" />
+    <ClCompile Include="src\Widgets\sounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="src\Screen\ScreenManager.h" />
     <ClInclude Include="src\Widgets\button.h" />
     <ClInclude Include="src\Widgets\secondary_icons.h" />
+    <ClInclude Include="src\Widgets\sounds.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -162,7 +164,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\geode\Documents\SFML-2.6.0\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -35,6 +35,37 @@ void Player::draw(sf::RenderTarget& window, Grid& grid)
 	}
 }
 
+void Player::drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mousePos_f, int x, int y, Grid& grid)
+{	
+	piece->move(mousePos_f, x, y);
+}
+
+void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
+{
+	assert(piece != nullptr); 
+	std::vector<int> pos_vect_i = { x , y }; 
+	sf::Vector2f pos_vect_f = grid.get_position_vector2f(x, y); 
+	std::vector<int> start_coords = grid.get_start_coords(); 
+	switch (game_state) {
+	case(placement) :
+		bool valid_move = (x < MAPSIZE && y < MAPSIZE / 2) && (grid.get_piece_on_cell(pos_vect_i) == nullptr)  ;
+		if (valid_move) {
+			piece->move(pos_vect_f , x , y);
+			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
+			grid.set_piece_on_cell(piece, x, y); 
+			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
+				"," << start_coords[1] << ")\n"; 
+			std::cout << std::boolalpha << "piece on starting coords = nullptr :  " 
+				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
+		}
+		else {
+			auto start_coords = grid.get_start_coords(); 
+			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)) , start_coords.at(0) , start_coords.at(1)); 
+			std::cout << "DBG msg : Cancelled move\n"; 
+		}
+	}
+}
+
 sf::Texture Player::assign_texture(const std::string* paths, ptrdiff_t i) {
 	sf::Texture texture;
 	try {

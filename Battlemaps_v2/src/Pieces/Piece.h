@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include "global_constants.h"
-#include "Grid.h"
 
 enum PieceType {
 	War,

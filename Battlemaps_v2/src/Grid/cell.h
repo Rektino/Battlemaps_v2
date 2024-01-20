@@ -5,10 +5,11 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
+#include "Piece.h"
 
-class Piece; /*fwd declaration of piece because of circular dependency found between Grid and Piece classes.\
-This informs the compiler about the existence of Piece class, which will be defined at another point. Because if I\
-include the Piece.h header here instead, the compilation will fail, since Piece.h includes the grid which includes the cell\
+/*class Piece; /*fwd declaration of piece because of circular dependency found between Grid and Piece classes.
+This informs the compiler about the existence of Piece class, which will be defined at another point. Because if I
+include the Piece.h header here instead, the compilation will fail, since Piece.h includes the grid which includes the cell
 which does not know about the Piece :D*/
 
 
@@ -20,9 +21,8 @@ class cell
 public : 
 	cell()= delete ;
 	cell(sf::RenderWindow& window,  int x, int y);
-	std::shared_ptr<Piece> getPiece() { return piece_here;  };
+	std::shared_ptr<Piece>& getPiece() { return piece_here;  };
 	void setPiece(std::shared_ptr<Piece>& piece) {		
-		//assert(piece_here == nullptr);
 		piece_here = piece;  
 	}
 	void clean() { piece_here = nullptr;  }

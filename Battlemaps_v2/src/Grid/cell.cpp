@@ -3,10 +3,11 @@
 cell::cell(sf::RenderWindow& window ,int x, int y) : posX(x) , posY(y)
 {
 	piece_here = nullptr; 
-	unsigned window_width = window.getSize().x;
-	unsigned window_height = window.getSize().y;
-	cell_size = { static_cast<float>(window_width / GRID_SIZE_X),
-				 static_cast<float>(window_height / GRID_SIZE_Y) };
+	
+	sf::Vector2f cell_size(
+		static_cast<float>(window.getSize().x) / GRID_SIZE_X,
+		static_cast<float>(window.getSize().y) / GRID_SIZE_Y
+	);
 	m_rectangle.setSize(cell_size);
 	m_rectangle.setFillColor(sf::Color::Transparent);
 	m_rectangle.setOutlineThickness(0.5f);

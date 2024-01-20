@@ -19,9 +19,10 @@ public :
 	Player(int id , sf::RenderWindow& window , Grid& grid); 
 	friend void randomize_pieces(sf::RenderTarget&, Grid& grid, Player&, Player&); 
 	void draw(sf::RenderTarget& window, Grid& grid); 
-	void evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece); 
-	void move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid); 
-	void attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece); 
+	void evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece); 	
+	void drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mouse_float, int x, int y, Grid& grid); 
+	void release_piece(Game_states game_state , std::shared_ptr<Piece> piece, int x, int y, Grid& grid);
+	void attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece);	
 	sf::Texture assign_texture(const std::string* paths, ptrdiff_t i);
 	//sf::Sprite create_sprite(sf::Texture& texture); 
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 
@@ -30,9 +31,11 @@ public :
 private : 
 	int m_id; 
 	Dashboard m_dashboard; 
+	std::shared_ptr<Piece> selected_piece; 
 	std::vector<std::shared_ptr<Piece>> m_pieces; 
 	std::vector<std::shared_ptr<sf::Sprite>> m_sprites; 
 	std::vector<sf::Texture> m_textures; 
+	std::vector<int> movement_start_coords; 
 	std::vector<int> available_moves; 
 	std::vector<int> available_attacks; 
 	std::array<int, numPieceTypes> cumulative_piece_sum{ 0 }; 
