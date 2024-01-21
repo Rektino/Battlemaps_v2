@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Events &amp; Mouse\mouse_hover.cpp" />
+    <ClCompile Include="src\Events &amp; Mouse\Timer.cpp" />
     <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp" />
     <ClCompile Include="src\Gameplay\Events_mouse_key.cpp" />
     <ClCompile Include="src\Gameplay\game.cpp" />
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h" />
+    <ClInclude Include="src\Events &amp; Mouse\Timer.h" />
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h" />
     <ClInclude Include="src\Gameplay\Events_mouse_key.h" />
     <ClInclude Include="src\Gameplay\game.h" />

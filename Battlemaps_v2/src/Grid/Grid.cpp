@@ -84,28 +84,15 @@ void Grid::set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y)
 	return; 
 }
 
-void Grid::set_selected_piece(bool player1_turn , int posX, int posY)
-{
-	/*auto& piece = map.at(posX).at(posY).getPiece(); 
-	if (player1_turn) {
-		if (piece->get_owner() == 1) {
-			selected_piece = piece; 
-		}		
-	}
-	else {
-		if (piece->get_owner() == 2) {
-			selected_piece = piece; 
-		}
-	}*/
-}
 
-void Grid::set_selected_piece(bool player1_turn , std::vector<int> coords)
+std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn , std::vector<int> coords)
 {
 	assert(coords.size() == 2); 
 	selected_piece = map.at(coords.at(0)).at(coords.at(1)).getPiece() ;
 	if (selected_piece != nullptr) {
 		movement_start_coords = { selected_piece->getX() , selected_piece->getY() };
-	}	
+	}
+	return selected_piece; 
 }
 
 std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)

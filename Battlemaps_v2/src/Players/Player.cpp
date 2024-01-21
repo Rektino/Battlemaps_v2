@@ -64,6 +64,7 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 			std::cout << "DBG msg : Cancelled move\n"; 
 		}
 	}
+	grid.clear_selected_piece(); 
 }
 
 sf::Texture Player::assign_texture(const std::string* paths, ptrdiff_t i) {
