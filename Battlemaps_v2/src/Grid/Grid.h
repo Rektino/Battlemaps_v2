@@ -16,6 +16,7 @@ public :
 	float getCellPositionX(int x, int y); 
 	float getCellPositionY(int x, int y); 
 	sf::Vector2f get_position_vector2f(int x, int y); 
+	sf::Vector2f get_position_vector2f(std::vector<int> coords_i); 
 	sf::Vector2f get_cell_size() { return cell_size; }
 	void set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y);
 	//void set_selected_piece(bool player1_turn , int posX, int posY); 

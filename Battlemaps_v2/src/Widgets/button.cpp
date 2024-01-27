@@ -75,6 +75,18 @@ bool Button::contains(sf::Vector2f position)
 	return (outline_rectangle.getGlobalBounds().contains(position));
 }
 
+void Button::activate()
+{
+	is_active = true; 
+	outline_rectangle.setOutlineColor(sf::Color::Green); 
+}
+
+void Button::deactivate()
+{
+	is_active = false; 
+	outline_rectangle.setOutlineColor(sf::Color::Black);
+}
+
 void Button::draw(sf::RenderWindow& window)
 {
 	window.draw(outline_rectangle); 

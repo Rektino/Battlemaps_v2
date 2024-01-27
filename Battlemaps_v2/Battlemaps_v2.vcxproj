@@ -23,7 +23,7 @@
     <ClCompile Include="src\Events &amp; Mouse\Timer.cpp" />
     <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp" />
     <ClCompile Include="src\Gameplay\Events_mouse_key.cpp" />
-    <ClCompile Include="src\Gameplay\game.cpp" />
+    <ClCompile Include="src\Gameplay\game_functions.cpp" />
     <ClCompile Include="src\Gameplay\menu.cpp" />
     <ClCompile Include="src\Gameplay\randomize_pieces.cpp" />
     <ClCompile Include="src\Grid\cell.cpp" />
@@ -42,15 +42,17 @@
     <ClCompile Include="src\Screen\Screen.cpp" />
     <ClCompile Include="src\Screen\ScreenManager.cpp" />
     <ClCompile Include="src\Widgets\button.cpp" />
+    <ClCompile Include="src\Widgets\edit_widgets.cpp" />
     <ClCompile Include="src\Widgets\secondary_icons.cpp" />
     <ClCompile Include="src\Widgets\sounds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Widgets\edit_widgets.h" />
     <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h" />
     <ClInclude Include="src\Events &amp; Mouse\Timer.h" />
     <ClInclude Include="src\Gameplay\Battlemaps_v2.h" />
     <ClInclude Include="src\Gameplay\Events_mouse_key.h" />
-    <ClInclude Include="src\Gameplay\game.h" />
+    <ClInclude Include="src\Gameplay\game_functions.h" />
     <ClInclude Include="src\Gameplay\menu.h" />
     <ClInclude Include="src\Gameplay\randomize_pieces.h" />
     <ClInclude Include="src\Grid\cell.h" />
@@ -72,6 +74,9 @@
     <ClInclude Include="src\Widgets\button.h" />
     <ClInclude Include="src\Widgets\secondary_icons.h" />
     <ClInclude Include="src\Widgets\sounds.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="keyboard_shortcuts.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -78,6 +78,12 @@ sf::Vector2f Grid::get_position_vector2f(int x, int y)
 	return sf::Vector2f{ getCellPositionX(x , y) ,  getCellPositionY(x , y) };
 }
 
+sf::Vector2f Grid::get_position_vector2f(std::vector<int> coords_i)
+{
+	return sf::Vector2f{ getCellPositionX(coords_i.at(0) , coords_i.at(1)) ,
+						 getCellPositionY(coords_i.at(0) , coords_i.at(1)) }; 
+}
+
 void Grid::set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y)
 {
 	map.at(x).at(y).setPiece(piece);

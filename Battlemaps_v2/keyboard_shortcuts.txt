@@ -1,0 +1,73 @@
+Visual Studio Productive Tips
+
+Duplicate line: CTRL +D
+
+Delete line: CTRL + SHIFT + L
+
+Selecting all instances of word: ALT + SHIFT + .(period) and then pressing .(period) repeatedly
+
+Vertical Selection: Hold down Alt Key and making the selection with either the mouse or keyboard.
+
+To create multiple cursors in arbitrary locations: CTRL + Alt + Click
+
+Cut Entire Line: CTRL + X 
+
+Comment: CTRL + [K, C]
+
+Un-Comment: CTRL + [K, U] 
+
+Add Line Above: CTRL + Enter
+
+Below: CTRL + SHIFT + Enter 
+
+Rename (Anything): CTRL + [R, R] 
+
+Go To Definition: F12 
+
+Find All References: SHIFT + F12 
+
+Refactor to Method: CTRL + [R, M] 
+
+Move Code Up: ALT + UpArrow
+
+Down: / ALT + DownArrow
+
+Format Document: CTRL + [K, D] 
+
+Surround with Snippet: CTRL + [K, S] 
+
+Collapse Class to Definitions: CTRL + [M,M] for collapsing one method and CTRL + [M, O] for all methods
+
+Organize Using Statements: CTRL + [R, G] 
+
+Quick Fix (Add Methods, implement interface, etc): CTRL + . (period) 
+
+Solution Explorer: CTRL + ALT + L 
+
+Search to class or file: CTRL + ; 
+
+Unity Project Explorer: SHIFT + ALT + E
+
+Creating Code Snippets:
+
+Creating Constructor: type ctor and then hit the tab
+
+Creating Properties: type prop and then hit the tab
+
+Creating Properties with full set and get snippets: type propfull and then hit the tab
+
+Creating try catch block: type try and then hit the tab
+
+Creating try finally block: type tryf and then hit the tab
+
+Switching between tabs: CTRL + tab 
+
+Switch to next Tab: CTRL + F6
+
+Switch to previous tab: CTRL + Shift + F6
+
+Closing tab: CTRL + F4
+
+Closing all tabs: ALT + [W,L] ;
+
+Opening file without using solution explorer: CTRL + , (comma

@@ -18,12 +18,15 @@ public:
 	void setRectSize(sf::Vector2f size); 
 	void setRectOutlineThickness(float thickness); 
 	void setRectFillColor(const sf::Color& color); 	
-	bool contains(sf::Vector2f position); 
+	bool contains(sf::Vector2f position);
+	void activate(); 
+	void deactivate(); 
 	void draw(sf::RenderWindow& window); 
 	sf::Vector2f getTextOffset(Grid& grid);
 	sf::FloatRect getGlobalBounds(); 
 private: 
 	sf::Font m_font; 
 	sf::Text text; 
-	sf::RectangleShape outline_rectangle; 	
+	sf::RectangleShape outline_rectangle;
+	bool is_active{ false }; 
 };

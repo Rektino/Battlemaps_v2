@@ -7,3 +7,5 @@
 #include "mouse_hover.h"
 #include "sounds.h"
 #include "Timer.h"
+#include "edit_widgets.h"
+#include "game_functions.h"

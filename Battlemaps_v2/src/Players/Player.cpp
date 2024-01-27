@@ -48,7 +48,7 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 	std::vector<int> start_coords = grid.get_start_coords(); 
 	switch (game_state) {
 	case(placement) :
-		bool valid_move = (x < MAPSIZE && y < MAPSIZE / 2) && (grid.get_piece_on_cell(pos_vect_i) == nullptr)  ;
+		/*bool valid_move = (x < MAPSIZE && y < MAPSIZE / 2) && (grid.get_piece_on_cell(pos_vect_i) == nullptr)  ;
 		if (valid_move) {
 			piece->move(pos_vect_f , x , y);
 			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
@@ -62,9 +62,62 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 			auto start_coords = grid.get_start_coords(); 
 			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)) , start_coords.at(0) , start_coords.at(1)); 
 			std::cout << "DBG msg : Cancelled move\n"; 
+		}*/
+		//TODO : Swapping pieces allwoed 
+		bool valid_square = (x < MAPSIZE && y < MAPSIZE); 
+		if (valid_square && grid.get_piece_on_cell(pos_vect_i) == nullptr) {
+			piece->move(pos_vect_f, x, y);
+			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
+			grid.set_piece_on_cell(piece, x, y);
+			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
+				"," << start_coords[1] << ")\n";
+			std::cout << std::boolalpha << "piece on starting coords = nullptr :  "
+				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
+		}
+		else if (valid_square && grid.get_piece_on_cell(pos_vect_i) != nullptr) {
+			std::shared_ptr<Piece> other_piece = grid.get_piece_on_cell(pos_vect_i); 
+			other_piece->move(grid.get_position_vector2f(start_coords), start_coords.at(0),start_coords.at(1)); 
+			grid.set_piece_on_cell(other_piece, start_coords.at(0), start_coords.at(1)); 
+			piece->move(pos_vect_f, x, y); 
+			grid.set_piece_on_cell(piece, x, y); 
+			std::cout << "DBG msg : Swapped on " << x << "," << y << " with piece from map(" << start_coords[0] <<
+				"," << start_coords[1] << ")\n";
+			std::cout << std::boolalpha << "piece on starting coords = nullptr :  "
+				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
+		}else {
+			auto start_coords = grid.get_start_coords();
+			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)), start_coords.at(0), start_coords.at(1));
+			std::cout << "DBG msg : Cancelled move\n";
 		}
 	}
+	//TODO  : Releasing piece on ACTION_STAGE of the game. Need to evaluate available moves etc
 	grid.clear_selected_piece(); 
+}
+
+bool Player::all_pieces_on_map()
+{
+	for (auto& piece_ptr : m_pieces) {
+		if (piece_ptr->getX() >= MAPSIZE || piece_ptr->getY() >= MAPSIZE) {
+			return false;
+		}
+	}
+	return true;
+}
+
+std::string Player::get_piece_info(std::shared_ptr<Piece> piece_ptr)
+{
+	std::stringstream ss;
+	ss << piece_ptr->getType() << "\n";
+	ss << "Attacks left : " << piece_ptr->get_attacks_left() << "\n";
+	ss << "Moves left : " << piece_ptr->get_moves_left() << "\n";
+	ss << "Has ability : " << (piece_ptr->effect_is_available() ? "Yes\n" : "No\n");
+	ss << "---------------------------------------\n";
+	ss << "DMG : " << piece_ptr->get_dmg() << "\n";
+	ss << "HP : " << piece_ptr->get_hp() << "\n";
+	ss << "RANGE : " << piece_ptr->get_range() << "\n";
+	ss << "---------------------------------------\n";
+	ss << "ABILITY : " << piece_ptr->get_description() << "\n";
+	return ss.str();
 }
 
 sf::Texture Player::assign_texture(const std::string* paths, ptrdiff_t i) {

@@ -22,6 +22,9 @@ int main()
     Player player2(2, main_window, grid);
     player1.place_pieces(grid);    
     player2.place_pieces(grid); 
+    sf::Font default_font;
+    default_font.loadFromFile(font_paths[0]); 
+    sf::Text current_piece_info("", default_font, 18); 
     /**************************************/
     /*------ Create sounds -----*/
     /**************************************/
@@ -50,21 +53,27 @@ int main()
         menu_icon.draw(main_window); 
         help_icon.draw(main_window);
         player1.draw(main_window, grid);
-        player2.draw(main_window, grid);  
+        player2.draw(main_window, grid);
+        main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
         if (my_rulebook.is_active()) {
             my_rulebook.draw(main_window);
         }        
         if (game_menu.is_active()) {
             game_menu.draw(main_window);            
-        }        
+        }
+        if (check_end_turn(player1_turn, player1, player2)) {
+            end_turn_btn.activate(); 
+        }
+        else {
+            end_turn_btn.deactivate(); 
+        }
         main_window.display();      
         sf::Event event; 
         while (main_window.pollEvent(event)) {  
             Timer t1; 
             std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
-            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));
-            //std::cout << "I am in cell : " << mouse_cell_i.at(0) << "," << mouse_cell_i.at(1) << "\n";             
+            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));                    
             if (event.type == sf::Event::Closed) {
                 std::cout << "WINDOW CLOSED !!";
                 main_window.close();
@@ -78,11 +87,19 @@ int main()
                 my_rulebook.toggle_state(); 
             }
             else if (SELECTING_PIECE(event , event_state)) {
-                std::cout << "@@ SELECTION @@\n";                 
+                std::cout << "@@ SELECTION @@\n";  
+                Player& player = (player1_turn ? player1 : player2);
                 if (grid.set_selected_piece(player1_turn, mouse_cell_i) != nullptr) {
                     event_state = Event_states::selected_piece; 
                     playSound(Sounds::selection, sounds_vector);
-                }                 
+                    current_piece_info.setString(player.get_piece_info(grid.get_selected_piece()));
+                    edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0)); 
+                }
+                else {
+                    current_piece_info.setString("");
+                }
+                //TODO : SELECTING PIECE ON ACTION STAGE 
+                //issue : I don't want the piece released as it currently does, if I just click and release mouse. 
             }
             else if (MOUSE_HOVERING(event , event_state)) {
                 mouse_hover(main_window, grid, end_turn_btn, game_menu);
@@ -96,12 +113,13 @@ int main()
                 event_state = Event_states::neutral; 
                 Player& player = (player1_turn ? player1 : player2);
                 player.release_piece(game_state, grid.get_selected_piece(), mouse_cell_i[0], mouse_cell_i[1], grid); 
-                playSound(Sounds::piece_move, sounds_vector);                  
-            }            
-            std::cout << "-------------Time elapsed : " << t1.elapsed() << "\n"; 
+                current_piece_info.setString("");
+                playSound(Sounds::piece_move, sounds_vector);                   
+            }         
+            else if (KEEP_SELECTION(event, event_state)) {
+                event_state = Event_states::hold_selection; 
+            }
         }
     }
-
-
     return 0; 
 }
