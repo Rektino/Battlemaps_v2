@@ -47,24 +47,14 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 	sf::Vector2f pos_vect_f = grid.get_position_vector2f(x, y); 
 	std::vector<int> start_coords = grid.get_start_coords(); 
 	switch (game_state) {
-	case(placement) :
-		/*bool valid_move = (x < MAPSIZE && y < MAPSIZE / 2) && (grid.get_piece_on_cell(pos_vect_i) == nullptr)  ;
-		if (valid_move) {
-			piece->move(pos_vect_f , x , y);
-			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
-			grid.set_piece_on_cell(piece, x, y); 
-			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
-				"," << start_coords[1] << ")\n"; 
-			std::cout << std::boolalpha << "piece on starting coords = nullptr :  " 
-				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
+	case(placement) :	
+		bool valid_square; 
+		if (this->m_id == 1) {
+			valid_square = (x < MAPSIZE && y < MAPSIZE/2);
 		}
 		else {
-			auto start_coords = grid.get_start_coords(); 
-			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)) , start_coords.at(0) , start_coords.at(1)); 
-			std::cout << "DBG msg : Cancelled move\n"; 
-		}*/
-		//TODO : Swapping pieces allwoed 
-		bool valid_square = (x < MAPSIZE && y < MAPSIZE); 
+			valid_square = (x < MAPSIZE && y >= MAPSIZE/2);
+		}
 		if (valid_square && grid.get_piece_on_cell(pos_vect_i) == nullptr) {
 			piece->move(pos_vect_f, x, y);
 			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));

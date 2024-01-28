@@ -38,7 +38,8 @@ int main()
     Event_states event_state = Event_states::neutral;    
     Button end_turn_btn(main_window, grid, 2 * grid.get_cell_size().x, grid.get_cell_size().y, "END TURN"); 
     end_turn_btn.setTextSize(25); 
-    end_turn_btn.setRectFillColor(sf::Color::Color(154, 246, 148)); 
+    //end_turn_btn.setRectFillColor(sf::Color::Color(154, 246, 148)); 
+    end_turn_btn.setRectFillColor(sf::Color::Transparent); 
     end_turn_btn.setPosition(grid,grid.get_position_vector2f(12,4)); 
     bool player1_turn = true;    
     //randomize_pieces(main_window, grid, player1, player2);   
@@ -64,6 +65,7 @@ int main()
         }
         if (check_end_turn(player1_turn, player1, player2)) {
             end_turn_btn.activate(); 
+            //TODO : evaluate end turn for action game stage 
         }
         else {
             end_turn_btn.deactivate(); 
@@ -97,6 +99,10 @@ int main()
                 }
                 else {
                     current_piece_info.setString("");
+                    if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
+                        player1_turn = !player1_turn; 
+                        playSound(Sounds::victory, sounds_vector); 
+                    }                    
                 }
                 //TODO : SELECTING PIECE ON ACTION STAGE 
                 //issue : I don't want the piece released as it currently does, if I just click and release mouse. 

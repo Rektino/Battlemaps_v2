@@ -77,13 +77,13 @@ bool Button::contains(sf::Vector2f position)
 
 void Button::activate()
 {
-	is_active = true; 
+	activated = true; 
 	outline_rectangle.setOutlineColor(sf::Color::Green); 
 }
 
 void Button::deactivate()
 {
-	is_active = false; 
+	activated = false; 
 	outline_rectangle.setOutlineColor(sf::Color::Black);
 }
 

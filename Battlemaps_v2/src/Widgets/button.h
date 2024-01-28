@@ -19,6 +19,7 @@ public:
 	void setRectOutlineThickness(float thickness); 
 	void setRectFillColor(const sf::Color& color); 	
 	bool contains(sf::Vector2f position);
+	bool is_active() { return activated;  }
 	void activate(); 
 	void deactivate(); 
 	void draw(sf::RenderWindow& window); 
@@ -28,5 +29,5 @@ private:
 	sf::Font m_font; 
 	sf::Text text; 
 	sf::RectangleShape outline_rectangle;
-	bool is_active{ false }; 
+	bool activated{ false }; 
 };
