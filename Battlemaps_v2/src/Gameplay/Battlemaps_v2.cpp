@@ -24,7 +24,9 @@ int main()
     player2.place_pieces(grid); 
     sf::Font default_font;
     default_font.loadFromFile(font_paths[0]); 
-    sf::Text current_piece_info("", default_font, 18); 
+    sf::Text current_piece_info("", default_font, 18);
+    sf::Text dashboard_info(player1.get_dashboard().getInfoAsString(), default_font, 24);
+    edit_text(dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 4));
     /**************************************/
     /*------ Create sounds -----*/
     /**************************************/
@@ -42,7 +44,8 @@ int main()
     end_turn_btn.setRectFillColor(sf::Color::Transparent); 
     end_turn_btn.setPosition(grid,grid.get_position_vector2f(12,4)); 
     bool player1_turn = true;    
-    //randomize_pieces(main_window, grid, player1, player2);   
+    randomize_pieces(main_window, grid, player1, player2);   
+    game_state = Game_states::action; 
     // 
     /************************************/
     /*********MAIN WINDOW LOOP***********/
@@ -57,15 +60,15 @@ int main()
         player2.draw(main_window, grid);
         main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
+        main_window.draw(dashboard_info); 
         if (my_rulebook.is_active()) {
             my_rulebook.draw(main_window);
         }        
         if (game_menu.is_active()) {
             game_menu.draw(main_window);            
         }
-        if (check_end_turn(player1_turn, player1, player2)) {
-            end_turn_btn.activate(); 
-            //TODO : evaluate end turn for action game stage 
+        if (check_end_turn(game_state , player1_turn, player1, player2)) {
+            end_turn_btn.activate();              
         }
         else {
             end_turn_btn.deactivate(); 
@@ -95,17 +98,21 @@ int main()
                     event_state = Event_states::selected_piece; 
                     playSound(Sounds::selection, sounds_vector);
                     current_piece_info.setString(player.get_piece_info(grid.get_selected_piece()));
-                    edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0)); 
+                    edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0));
+                    if (game_state == action) {
+                        player.evaluate_actions(grid, grid.get_selected_piece()); 
+                    }
+                }
+                else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
+                    player1_turn = !player1_turn;
+                    if (player1_turn) game_state = Game_states::action;
+                    playSound(Sounds::victory, sounds_vector);
+                    current_piece_info.setString("");
                 }
                 else {
                     current_piece_info.setString("");
-                    if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
-                        player1_turn = !player1_turn; 
-                        playSound(Sounds::victory, sounds_vector); 
-                    }                    
                 }
                 //TODO : SELECTING PIECE ON ACTION STAGE 
-                //issue : I don't want the piece released as it currently does, if I just click and release mouse. 
             }
             else if (MOUSE_HOVERING(event , event_state)) {
                 mouse_hover(main_window, grid, end_turn_btn, game_menu);
@@ -120,6 +127,7 @@ int main()
                 Player& player = (player1_turn ? player1 : player2);
                 player.release_piece(game_state, grid.get_selected_piece(), mouse_cell_i[0], mouse_cell_i[1], grid); 
                 current_piece_info.setString("");
+                grid.deactivate_all_cells(); 
                 playSound(Sounds::piece_move, sounds_vector);                   
             }         
             else if (KEEP_SELECTION(event, event_state)) {

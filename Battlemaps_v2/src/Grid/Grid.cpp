@@ -2,6 +2,8 @@
 #include <iostream>
 
 std::shared_ptr<Piece> Grid::selected_piece = nullptr; 
+std::shared_ptr<Piece> Grid::previous_piece = nullptr; 
+std::vector<int> Grid::active_cell_coords = { 0 , 0 }; 
 std::vector<int> Grid::movement_start_coords = { 0,0 }; 
 
 Grid::Grid(sf::RenderWindow& window) {	
@@ -52,19 +54,19 @@ void Grid::clean_map()
 
 std::vector<int> Grid::get_mouse_cell(sf::Window& window)
 {
-	sf::Vector2i mousePos = bound_check(window) ; 
+	sf::Vector2i mousePos = bound_check(window);
 	sf::Vector2f mousePos_f = { static_cast<float>(mousePos.x) ,
-							static_cast<float>(mousePos.y) }; 	
-	int cell_x = static_cast<int>(mousePos.x / this->cell_size.x); 
+							static_cast<float>(mousePos.y) };
+	int cell_x = static_cast<int>(mousePos.x / this->cell_size.x);
 	int cell_y = static_cast<int>(mousePos.y / this->cell_size.y);
 	return { cell_x , cell_y }; //due to map being [row][column]
 }
 
 float Grid::getCellPositionX(int x, int y)
 {
-	std::cout << "Trying to access cell (" << x << "," << y << ")\n"; 
+	std::cout << "Trying to access cell (" << x << "," << y << ")\n";
 	assert(x < GRID_SIZE_X && y < GRID_SIZE_Y);
-	return std::floor(map[x][y].getPosition().x + map[x][y].getWidth() / 2.0f);	
+	return std::floor(map[x][y].getPosition().x + map[x][y].getWidth() / 2.0f);
 }
 
 float Grid::getCellPositionY(int x, int y)
@@ -74,51 +76,84 @@ float Grid::getCellPositionY(int x, int y)
 }
 
 sf::Vector2f Grid::get_position_vector2f(int x, int y)
-{	 
+{
 	return sf::Vector2f{ getCellPositionX(x , y) ,  getCellPositionY(x , y) };
 }
 
 sf::Vector2f Grid::get_position_vector2f(std::vector<int> coords_i)
 {
 	return sf::Vector2f{ getCellPositionX(coords_i.at(0) , coords_i.at(1)) ,
-						 getCellPositionY(coords_i.at(0) , coords_i.at(1)) }; 
+						 getCellPositionY(coords_i.at(0) , coords_i.at(1)) };
 }
 
 void Grid::set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y)
 {
 	map.at(x).at(y).setPiece(piece);
-	return; 
+	return;
+}
+
+void Grid::activate_cell(std::vector<int> coords)
+{
+	if (coords.at(0) > MAPSIZE - 1 || coords.at(1) > MAPSIZE - 1) {
+		std::cerr << "Error: Outside map limits for cell activation\n";
+		return;
+	}
+	std::vector<int> prev_active_coords = active_cell_coords;
+	map.at(prev_active_coords.at(0)).at(prev_active_coords.at(1)).deactivate();
+	map.at(coords.at(0)).at(coords.at(1)).activate_selection();
+	active_cell_coords = { coords.at(0) , coords.at(1) };
+	return;
+}
+
+void Grid::deactivate_all_cells()
+{
+	std::vector<int> prev_active_coords = active_cell_coords;
+	map.at(prev_active_coords.at(0)).at(prev_active_coords.at(1)).deactivate();
 }
 
 
-std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn , std::vector<int> coords)
+//sets the sellected piece on these coordinates if valid. If out of bounds or wrong player_id, returns nullptr
+std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn, std::vector<int> coords)
 {
-	assert(coords.size() == 2); 
-	if (map.at(coords.at(0)).at(coords.at(1)).getPiece() == nullptr) return nullptr; 
-	int piece_owner = map.at(coords.at(0)).at(coords.at(1)).getPiece()->get_owner(); 
+	assert(coords.size() == 2);
+	if (map.at(coords.at(0)).at(coords.at(1)).getPiece() == nullptr) return nullptr;
+	int piece_owner = map.at(coords.at(0)).at(coords.at(1)).getPiece()->get_owner();
 	if (((piece_owner == 2) && player1_turn)
 		|| (piece_owner == 1) && !player1_turn) {
 		return nullptr;
 	}
-	selected_piece = map.at(coords.at(0)).at(coords.at(1)).getPiece() ;	 
-	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };	
-	return selected_piece; 
+	selected_piece = map.at(coords.at(0)).at(coords.at(1)).getPiece();
+	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };
+	activate_cell(coords);
+	return selected_piece;
 }
 
 std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)
 {
 	auto piece = map.at(x).at(y).getPiece();
 	if (piece == nullptr) {
-		std::cerr << "(!)-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n"; 
-		return nullptr; 
+		std::cerr << "(!)-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n";
+		return nullptr;
 	}
-	return piece; 
+	return piece;
 }
 
 std::shared_ptr<Piece> Grid::get_piece_on_cell(std::vector<int> coords_i)
 {
-	assert(coords_i.size() == 2); 
-	auto x = coords_i.at(0); 
-	auto y = coords_i.at(1); 
-	return get_piece_on_cell(x , y) ;
+	assert(coords_i.size() == 2);
+	auto x = coords_i.at(0);
+	auto y = coords_i.at(1);
+	return get_piece_on_cell(x, y);
+}
+
+//returns true if a) the cell coords are valid and b) no piece stands there 
+bool Grid::is_free_cell(int posX, int posY)
+{
+	if (posX > MAPSIZE-1 || posY > MAPSIZE-1 || posX < 0 || posY < 0) {
+		return false;
+	}	
+	if (get_piece_on_cell(posX, posY) != nullptr) {
+		return false;
+	}
+	return true ;
 }

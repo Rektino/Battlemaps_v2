@@ -32,6 +32,23 @@ void cell::draw(sf::RenderWindow& window)
 	window.draw(m_circle); 
 }
 
+void cell::activate_target()
+{
+	m_circle.setOutlineThickness(2.0f); 
+	m_circle.setOutlineColor(sf::Color::Red);
+}
+
+void cell::deactivate()
+{
+	m_circle.setOutlineThickness(0.0f);
+}
+
+void cell::activate_selection()
+{
+	m_circle.setOutlineThickness(2.0f); 
+	m_circle.setOutlineColor(sf::Color::Green); 
+}
+
 sf::Vector2f cell::getPosition()
 {
 	return m_rectangle.getPosition(); 

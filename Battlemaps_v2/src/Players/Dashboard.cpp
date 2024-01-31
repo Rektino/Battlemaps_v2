@@ -20,7 +20,7 @@ void Dashboard::updateAvgHp(double avgHP)
 	average_hp = avgHP;
 }
 
-std::string Dashboard::getInfoAsString() {
+std::string Dashboard::getInfoAsString() const {
 	std::stringstream ss;
 	ss << "--- PLAYER INFO --- " << "\n";  //should be replaced with the player's username
 	ss << "Actions Left: " << actions_left << "\n";

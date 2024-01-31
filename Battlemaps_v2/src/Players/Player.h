@@ -12,6 +12,17 @@
 #include "Healer.h"
 #include "Commander.h"
 
+enum Directions {
+	NORTH,
+	NORTHEAST,
+	EAST,
+	SOUTHEAST,
+	SOUTH,
+	SOUTHWEST,
+	WEST,
+	NORTHWEST,
+	TOTAL_DIRECTIONS
+};
 
 class Player {
 public : 
@@ -30,6 +41,7 @@ public :
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 
 	void create_pieces(); 
 	void place_pieces(Grid& grid); 
+	const Dashboard& get_dashboard() { return m_dashboard; }
 private : 
 	int m_id; 
 	Dashboard m_dashboard; 
@@ -37,7 +49,7 @@ private :
 	std::vector<std::shared_ptr<sf::Sprite>> m_sprites; 
 	std::vector<sf::Texture> m_textures; 
 	std::vector<int> movement_start_coords; 
-	std::vector<int> available_moves; 
-	std::vector<int> available_attacks; 
+	std::vector<std::vector<int>> available_moves; 
+	std::vector<std::vector<int>> available_attacks; 
 	std::array<int, numPieceTypes> cumulative_piece_sum{ 0 }; 
 };

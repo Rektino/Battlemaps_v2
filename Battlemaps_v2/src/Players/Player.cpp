@@ -35,6 +35,112 @@ void Player::draw(sf::RenderTarget& window, Grid& grid)
 	}
 }
 
+//Evaluates available moves and attacks of the current player, based on the selected piece
+void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
+{
+	std::cout << "Evaluating actions!!\n"; 
+	available_moves.clear(); 
+	available_attacks.clear(); 
+	short int enemy; 
+	if (selected_piece->get_owner() == 1) {
+		enemy = 2; 
+	}
+	else {
+		enemy = 1; 
+	}
+	int x = selected_piece->getX();
+	int y = selected_piece->getY();
+	int attack_range = selected_piece->get_range();
+	for (int dir = NORTH; dir <= TOTAL_DIRECTIONS; dir++) {
+		int posX{}, posY{};
+		std::vector<int> free_cell_coords; 
+		if (dir == NORTH) {
+			posX = x;
+			posY = y - 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY); 
+				available_moves.emplace_back(free_cell_coords); 
+			}
+		}
+		else
+		if (dir == NORTHEAST) {
+			posX = x + 1;
+			posY = y - 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == EAST) {
+			posX = x + 1;
+			posY = y;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == SOUTHEAST) {
+			posX = x + 1;
+			posY = y + 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == SOUTH) {
+			posX = x;
+			posY = y + 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == SOUTHWEST) {
+			posX = x - 1;
+			posY = y + 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == WEST) {
+			posX = x - 1;
+			posY = y;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		else
+		if (dir == NORTHWEST) {
+			posX = x - 1;
+			posY = y - 1;
+			if (grid.is_free_cell(posX, posY)) {
+				free_cell_coords.emplace_back(posX);
+				free_cell_coords.emplace_back(posY);
+				available_moves.emplace_back(free_cell_coords);
+			}
+		}
+		std::cout << "DBG : -- Added available move cell : (" << posX << "," << posY << ") \n"; 
+	}
+	std::cout << "DBG : ALL AVAILABLE MOVES FOR THIS PIECE : \n"; 
+	for (auto& moves : available_moves) {
+		std::cout << moves.at(0) << " , " << moves.at(1) << "\n"; 
+	}
+}
+
 void Player::drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mousePos_f, int x, int y, Grid& grid)
 {	
 	piece->move(mousePos_f, x, y);
@@ -47,13 +153,13 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 	sf::Vector2f pos_vect_f = grid.get_position_vector2f(x, y); 
 	std::vector<int> start_coords = grid.get_start_coords(); 
 	switch (game_state) {
-	case(placement) :	
-		bool valid_square; 
+	case(placement):
+		bool valid_square;
 		if (this->m_id == 1) {
-			valid_square = (x < MAPSIZE && y < MAPSIZE/2);
+			valid_square = (x < MAPSIZE && y < MAPSIZE / 2);
 		}
 		else {
-			valid_square = (x < MAPSIZE && y >= MAPSIZE/2);
+			valid_square = (x < MAPSIZE && y >= MAPSIZE / 2);
 		}
 		if (valid_square && grid.get_piece_on_cell(pos_vect_i) == nullptr) {
 			piece->move(pos_vect_f, x, y);
@@ -65,21 +171,45 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
 		}
 		else if (valid_square && grid.get_piece_on_cell(pos_vect_i) != nullptr) {
-			std::shared_ptr<Piece> other_piece = grid.get_piece_on_cell(pos_vect_i); 
-			other_piece->move(grid.get_position_vector2f(start_coords), start_coords.at(0),start_coords.at(1)); 
-			grid.set_piece_on_cell(other_piece, start_coords.at(0), start_coords.at(1)); 
-			piece->move(pos_vect_f, x, y); 
-			grid.set_piece_on_cell(piece, x, y); 
+			std::shared_ptr<Piece> other_piece = grid.get_piece_on_cell(pos_vect_i);
+			other_piece->move(grid.get_position_vector2f(start_coords), start_coords.at(0), start_coords.at(1));
+			grid.set_piece_on_cell(other_piece, start_coords.at(0), start_coords.at(1));
+			piece->move(pos_vect_f, x, y);
+			grid.set_piece_on_cell(piece, x, y);
 			std::cout << "DBG msg : Swapped on " << x << "," << y << " with piece from map(" << start_coords[0] <<
 				"," << start_coords[1] << ")\n";
 			std::cout << std::boolalpha << "piece on starting coords = nullptr :  "
 				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
-		}else {
-			auto start_coords = grid.get_start_coords();
+		}
+		else {
 			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)), start_coords.at(0), start_coords.at(1));
 			std::cout << "DBG msg : Cancelled move\n";
 		}
+		break; 
+	case(action):
+		valid_square = false; 
+		for (auto& square : available_moves) {
+			if (square.at(0) == x && square.at(1) == y) {
+				valid_square = true; 
+				break;
+			}
+		}
+		if (valid_square) {
+			piece->move(pos_vect_f , x ,y);
+			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
+			grid.set_piece_on_cell(piece, x, y); 
+			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
+				"," << start_coords[1] << ")\n";
+			std::cout << std::boolalpha << "piece on starting coords = nullptr :  "
+				<< (grid.get_piece_on_cell(start_coords[0], start_coords[1]) == nullptr) << "\n";
+		}
+		else {
+			piece->move(grid.get_position_vector2f(start_coords.at(0), start_coords.at(1)), start_coords.at(0), start_coords.at(1));
+			std::cout << "DBG msg : Cancelled move\n";
+		}
+		break;
 	}
+	
 	//TODO  : Releasing piece on ACTION_STAGE of the game. Need to evaluate available moves etc
 	grid.clear_selected_piece(); 
 }

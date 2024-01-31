@@ -26,7 +26,10 @@ public :
 		piece_here = piece;  
 	}
 	void clean() { piece_here = nullptr;  }
-	void draw(sf::RenderWindow& window); 
+	void draw(sf::RenderWindow& window);
+	void activate_selection();
+	void activate_target(); 
+	void deactivate(); 
 	sf::Vector2f getPosition(); 
 	float getHeight(); 
 	float getWidth(); 
