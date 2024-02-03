@@ -3,8 +3,8 @@
 
 std::shared_ptr<Piece> Grid::selected_piece = nullptr; 
 std::shared_ptr<Piece> Grid::previous_piece = nullptr; 
-std::vector<int> Grid::active_cell_coords = { 0 , 0 }; 
 std::vector<int> Grid::movement_start_coords = { 0,0 }; 
+std::vector<int> Grid::previous_piece_start_coords = { 0 , 0 }; 
 
 Grid::Grid(sf::RenderWindow& window) {	
 	unsigned window_width = window.getSize().x;
@@ -91,24 +91,38 @@ void Grid::set_piece_on_cell(std::shared_ptr<Piece> piece, int x, int y)
 	map.at(x).at(y).setPiece(piece);
 	return;
 }
-
-void Grid::activate_cell(std::vector<int> coords)
+//set the active cell green 
+void Grid::activate_particular_cell(std::vector<int> coords)
 {
 	if (coords.at(0) > MAPSIZE - 1 || coords.at(1) > MAPSIZE - 1) {
 		std::cerr << "Error: Outside map limits for cell activation\n";
 		return;
 	}
-	std::vector<int> prev_active_coords = active_cell_coords;
-	map.at(prev_active_coords.at(0)).at(prev_active_coords.at(1)).deactivate();
+	deactivate_all_cells(); 
 	map.at(coords.at(0)).at(coords.at(1)).activate_selection();
-	active_cell_coords = { coords.at(0) , coords.at(1) };
 	return;
 }
 
-void Grid::deactivate_all_cells()
+void Grid::activate_available_cells(const std::vector<std::vector<int>>& available_cells, sf::Color color)
 {
-	std::vector<int> prev_active_coords = active_cell_coords;
-	map.at(prev_active_coords.at(0)).at(prev_active_coords.at(1)).deactivate();
+	for (auto& point : available_cells) {
+		auto x = point.at(0); 
+		auto y = point.at(1); 
+		map.at(x).at(y).activate_selection(color); 
+	}
+}
+
+
+void Grid::deactivate_all_cells()
+
+{
+	for (auto& row : map) {
+		for (auto& cell : row) {
+			if (cell.is_active()) {
+				cell.deactivate(); 
+			}
+		}
+	}
 }
 
 
@@ -116,15 +130,28 @@ void Grid::deactivate_all_cells()
 std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn, std::vector<int> coords)
 {
 	assert(coords.size() == 2);
-	if (map.at(coords.at(0)).at(coords.at(1)).getPiece() == nullptr) return nullptr;
+	if (map.at(coords.at(0)).at(coords.at(1)).getPiece() == nullptr) {
+		previous_piece = selected_piece;
+		if (previous_piece != nullptr) {
+			previous_piece_start_coords = { previous_piece->getX() , previous_piece->getY() };
+		}
+		selected_piece = nullptr; 
+		return nullptr;
+	}
 	int piece_owner = map.at(coords.at(0)).at(coords.at(1)).getPiece()->get_owner();
 	if (((piece_owner == 2) && player1_turn)
 		|| (piece_owner == 1) && !player1_turn) {
+		previous_piece = selected_piece;
+		if (previous_piece != nullptr) {
+			previous_piece_start_coords = { previous_piece->getX() , previous_piece->getY() };
+		}
+		selected_piece = nullptr; 
 		return nullptr;
 	}
+	previous_piece = selected_piece; 
 	selected_piece = map.at(coords.at(0)).at(coords.at(1)).getPiece();
 	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };
-	activate_cell(coords);
+	activate_particular_cell(coords);
 	return selected_piece;
 }
 
@@ -132,7 +159,7 @@ std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)
 {
 	auto piece = map.at(x).at(y).getPiece();
 	if (piece == nullptr) {
-		std::cerr << "(!)-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n";
+		std::cout << "-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n";
 		return nullptr;
 	}
 	return piece;

@@ -33,9 +33,13 @@ public :
 	void evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece); 	
 	void drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mouse_float, int x, int y, Grid& grid); 
 	void release_piece(Game_states game_state , std::shared_ptr<Piece> piece, int x, int y, Grid& grid);
+	void move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid); 
 	void attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece);	
-	bool all_pieces_on_map(); 
+	bool all_pieces_on_map();
+	bool is_available_move(std::vector<int> coords); 
 	std::string get_piece_info(std::shared_ptr<Piece> piece_ptr);	
+	const std::vector<std::vector<int>>& get_available_moves() { return available_moves;  }
+	const std::vector<std::vector<int>>& get_available_attackes() { return available_attacks; }
 	sf::Texture assign_texture(const std::string* paths, ptrdiff_t i);
 	//sf::Sprite create_sprite(sf::Texture& texture); 
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 

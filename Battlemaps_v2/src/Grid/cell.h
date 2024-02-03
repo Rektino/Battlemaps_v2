@@ -27,9 +27,9 @@ public :
 	}
 	void clean() { piece_here = nullptr;  }
 	void draw(sf::RenderWindow& window);
-	void activate_selection();
-	void activate_target(); 
+	void activate_selection(sf::Color color = sf::Color::Green);
 	void deactivate(); 
+	bool is_active() { return activated;  }
 	sf::Vector2f getPosition(); 
 	float getHeight(); 
 	float getWidth(); 
@@ -37,6 +37,7 @@ public :
 private : 
 	int posX{}; 
 	int posY{}; 
+	bool activated{ false } ;
 	sf::Vector2f cell_size; 
 	std::shared_ptr<Piece> piece_here;
 	sf::RectangleShape m_rectangle;

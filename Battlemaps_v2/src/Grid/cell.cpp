@@ -32,21 +32,17 @@ void cell::draw(sf::RenderWindow& window)
 	window.draw(m_circle); 
 }
 
-void cell::activate_target()
-{
-	m_circle.setOutlineThickness(2.0f); 
-	m_circle.setOutlineColor(sf::Color::Red);
-}
-
 void cell::deactivate()
 {
+	this->activated = false; 
 	m_circle.setOutlineThickness(0.0f);
 }
 
-void cell::activate_selection()
+void cell::activate_selection(sf::Color color)
 {
+	this->activated = true; 
 	m_circle.setOutlineThickness(2.0f); 
-	m_circle.setOutlineColor(sf::Color::Green); 
+	m_circle.setOutlineColor(color); 
 }
 
 sf::Vector2f cell::getPosition()

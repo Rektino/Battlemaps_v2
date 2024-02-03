@@ -214,6 +214,15 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 	grid.clear_selected_piece(); 
 }
 
+void Player::move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
+{
+	sf::Vector2f pos_vect_f = grid.get_position_vector2f(x, y);
+	std::vector<int> start_coords = grid.get_start_coords();
+	piece->move(pos_vect_f, x, y); 
+	grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
+	grid.set_piece_on_cell(piece, x, y); 
+}
+
 bool Player::all_pieces_on_map()
 {
 	for (auto& piece_ptr : m_pieces) {
@@ -222,6 +231,16 @@ bool Player::all_pieces_on_map()
 		}
 	}
 	return true;
+}
+
+bool Player::is_available_move(std::vector<int> coords)
+{
+	for (const auto& move_coords : available_moves) {
+		if (move_coords.at(0) == coords.at(0) && move_coords.at(1) == coords.at(1)) {
+			return true; 
+		}
+	}
+	return false;
 }
 
 std::string Player::get_piece_info(std::shared_ptr<Piece> piece_ptr)

@@ -101,6 +101,7 @@ int main()
                     edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0));
                     if (game_state == action) {
                         player.evaluate_actions(grid, grid.get_selected_piece()); 
+                        grid.activate_available_cells(player.get_available_moves(), sf::Color::Magenta); 
                     }
                 }
                 else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
@@ -111,8 +112,18 @@ int main()
                 }
                 else {
                     current_piece_info.setString("");
-                }
-                //TODO : SELECTING PIECE ON ACTION STAGE 
+                    bool is_move = (grid.get_previous_piece() != nullptr) && (game_state == action) && (player.is_available_move(mouse_cell_i)) ; 
+                    if (is_move) {
+                        //TODO  : Fix bug here. The previous piece starting coords are not getting deleted/upadted on the grid
+                        // ,unlike the selected piece.
+                        auto start_coords = grid.get_start_coords();
+                        player.move_piece(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1) , grid); 
+                        grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
+                        grid.set_piece_on_cell(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1)) ;
+                        grid.deactivate_all_cells(); 
+                    }
+                    grid.set_previous_piece(nullptr); 
+                }                
             }
             else if (MOUSE_HOVERING(event , event_state)) {
                 mouse_hover(main_window, grid, end_turn_btn, game_menu);
