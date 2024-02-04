@@ -41,8 +41,12 @@ void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
 	std::cout << "Evaluating actions!!\n"; 
 	available_moves.clear(); 
 	available_attacks.clear(); 
+	if (selected_piece->get_owner() != m_id) {
+		std::cout << "Enemy piece was selected. Not evaluating actions...\n"; 
+		return; 
+	}
 	short int enemy; 
-	if (selected_piece->get_owner() == 1) {
+	if (m_id == 1) {
 		enemy = 2; 
 	}
 	else {
@@ -139,6 +143,69 @@ void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
 	for (auto& moves : available_moves) {
 		std::cout << moves.at(0) << " , " << moves.at(1) << "\n"; 
 	}
+	//TODO : Evaluate available attacks : 
+	std::vector<int> target{}; 
+	int posX{}, posY{}; 
+	for (int dir = NORTH; dir < TOTAL_DIRECTIONS; dir++) {
+		for (int distance = 1; distance <= attack_range; distance++) {
+			if (dir == NORTH) {
+				posX = x;
+				posY = y - distance;
+				target = grid.obtain_target(posX, posY, enemy); 
+			}else
+			if (dir == NORTHEAST) {
+				posX = x + 1;
+				posY = y - 1;
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			else
+			if (dir == EAST) {
+				posX = x + 1;
+				posY = y;			
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			else
+			if (dir == SOUTHEAST) {
+				posX = x + 1;
+				posY = y + 1;			
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			else
+			if (dir == SOUTH) {
+				posX = x;
+				posY = y + 1;			
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			else
+			if (dir == SOUTHWEST) {
+				posX = x - 1;
+				posY = y + 1;
+				target = grid.obtain_target(posX, posY, enemy);
+			
+			}
+			else
+			if (dir == WEST) {
+				posX = x - 1;
+				posY = y;			
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			else
+			if (dir == NORTHWEST) {
+				posX = x - 1;
+				posY = y - 1;			
+				target = grid.obtain_target(posX, posY, enemy);
+			}
+			if (target.size() != 0) {
+				available_attacks.emplace_back(target); 
+				break; // don't search deeper in that direction, cause piece is blocking !
+				std::cout << "AVAILABLE TARGET AT : (" << target.at(0) << "," << target.at(1) << ")\n";
+			}
+		}
+	}
+	std::cout << "DBG : ALL AVAILABLE ATTACKS FOR THIS PIECE : \n";
+	for (auto& attack: available_attacks) {
+		std::cout << attack.at(0) << " , " << attack.at(1) << "\n";
+	}
 }
 
 void Player::drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mousePos_f, int x, int y, Grid& grid)
@@ -221,6 +288,11 @@ void Player::move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
 	piece->move(pos_vect_f, x, y); 
 	grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
 	grid.set_piece_on_cell(piece, x, y); 
+}
+
+void Player::attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece)
+{
+	std::cout << "Attack piece called\n"; 
 }
 
 bool Player::all_pieces_on_map()

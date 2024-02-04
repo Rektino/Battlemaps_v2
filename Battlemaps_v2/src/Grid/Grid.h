@@ -33,6 +33,7 @@ public :
 	std::shared_ptr<Piece> get_piece_on_cell(int x, int y); 
 	std::shared_ptr<Piece> get_piece_on_cell(std::vector<int> coords_i); 	
 	bool is_free_cell(int posX, int posY); 
+	std::vector<int> obtain_target(int posX, int posY, int enemy); 
 	friend bool mouse_over_piece(Grid& grid, sf::Vector2f position_f);
 private: 	
 	static std::shared_ptr<Piece> previous_piece; 

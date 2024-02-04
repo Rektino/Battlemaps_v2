@@ -38,8 +38,9 @@ public :
 	bool all_pieces_on_map();
 	bool is_available_move(std::vector<int> coords); 
 	std::string get_piece_info(std::shared_ptr<Piece> piece_ptr);	
+	int get_id() { return m_id;  }
 	const std::vector<std::vector<int>>& get_available_moves() { return available_moves;  }
-	const std::vector<std::vector<int>>& get_available_attackes() { return available_attacks; }
+	const std::vector<std::vector<int>>& get_available_attacks() { return available_attacks; }
 	sf::Texture assign_texture(const std::string* paths, ptrdiff_t i);
 	//sf::Sprite create_sprite(sf::Texture& texture); 
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 

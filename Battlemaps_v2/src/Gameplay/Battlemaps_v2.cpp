@@ -78,7 +78,8 @@ int main()
         while (main_window.pollEvent(event)) {  
             Timer t1; 
             std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
-            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));                    
+            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window)); 
+            Player& player = (player1_turn ? player1 : player2);
             if (event.type == sf::Event::Closed) {
                 std::cout << "WINDOW CLOSED !!";
                 main_window.close();
@@ -93,15 +94,20 @@ int main()
             }
             else if (SELECTING_PIECE(event , event_state)) {
                 std::cout << "@@ SELECTION @@\n";  
-                Player& player = (player1_turn ? player1 : player2);
                 if (grid.set_selected_piece(player1_turn, mouse_cell_i) != nullptr) {
                     event_state = Event_states::selected_piece; 
                     playSound(Sounds::selection, sounds_vector);
                     current_piece_info.setString(player.get_piece_info(grid.get_selected_piece()));
                     edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0));
-                    if (game_state == action) {
+                    if (game_state == action && grid.get_selected_piece()->get_owner() == player.get_id()) {
                         player.evaluate_actions(grid, grid.get_selected_piece()); 
                         grid.activate_available_cells(player.get_available_moves(), sf::Color::Magenta); 
+                        grid.activate_available_cells(player.get_available_attacks(), sf::Color::Red);
+
+                    }
+                    else if (game_state == action && grid.get_selected_piece()->get_owner() != player.get_id() 
+                        && grid.get_previous_piece() != nullptr &&  grid.get_previous_piece()->get_owner() == player.get_id()) {
+                        player.attack_piece(grid.get_previous_piece(), grid.get_selected_piece()); 
                     }
                 }
                 else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
@@ -112,30 +118,27 @@ int main()
                 }
                 else {
                     current_piece_info.setString("");
-                    bool is_move = (grid.get_previous_piece() != nullptr) && (game_state == action) && (player.is_available_move(mouse_cell_i)) ; 
+                    bool is_move = (grid.get_previous_piece() != nullptr) && (grid.get_previous_piece()->get_owner() == player.get_id())
+                        && (game_state == action) && (player.is_available_move(mouse_cell_i));
                     if (is_move) {
-                        //TODO  : Fix bug here. The previous piece starting coords are not getting deleted/upadted on the grid
-                        // ,unlike the selected piece.
                         auto start_coords = grid.get_start_coords();
                         player.move_piece(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1) , grid); 
                         grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
                         grid.set_piece_on_cell(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1)) ;
-                        grid.deactivate_all_cells(); 
                     }
+                    grid.deactivate_all_cells();
                     grid.set_previous_piece(nullptr); 
                 }                
             }
             else if (MOUSE_HOVERING(event , event_state)) {
                 mouse_hover(main_window, grid, end_turn_btn, game_menu);
             }
-            else if (DRAGGING_PIECE(event , event_state , grid)) {   
+            else if (DRAGGING_PIECE(event , event_state , grid , player.get_id())) {   
                 event_state = Event_states::moving_piece; 
-                Player& player = (player1_turn ? player1 : player2) ;                
                 player.drag_piece(grid.get_selected_piece() , mousePos_f , mouse_cell_i[0] , mouse_cell_i[1] , grid);                
             }
             else if (RELEASING_PIECE(event , event_state)) { 
-                event_state = Event_states::neutral; 
-                Player& player = (player1_turn ? player1 : player2);
+                event_state = Event_states::neutral;                
                 player.release_piece(game_state, grid.get_selected_piece(), mouse_cell_i[0], mouse_cell_i[1], grid); 
                 current_piece_info.setString("");
                 grid.deactivate_all_cells(); 

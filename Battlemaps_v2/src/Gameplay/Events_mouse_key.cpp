@@ -27,9 +27,9 @@ bool SELECTING_PIECE(sf::Event& event, Event_states& event_state) {
 }
 
 //returns true if the user is currently draggin a piece and the event_state is 'selected_piece' OR 'moving_piece'
-bool DRAGGING_PIECE(sf::Event& event, Event_states& event_state, Grid& grid) {
+bool DRAGGING_PIECE(sf::Event& event, Event_states& event_state, Grid& grid , int player_id) {
 	return ((event_state == selected_piece || event_state == moving_piece) && (event.type == sf::Event::MouseMoved && sf::Mouse::isButtonPressed(sf::Mouse::Left)
-		&& grid.get_selected_piece() != nullptr));
+		&& grid.get_selected_piece() != nullptr && grid.get_selected_piece()->get_owner() == player_id));
 }
 
 //returns true if the user is releasing a piece and event_state is 'moving_piece'
