@@ -136,20 +136,9 @@ std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn, std::vector<i
 		if (previous_piece != nullptr) {
 			previous_piece_start_coords = { previous_piece->getX() , previous_piece->getY() };
 		}
-		selected_piece = nullptr; 
+		selected_piece = nullptr;
 		return nullptr;
 	}
-	//idea : allow the return of enemy piece also, to assist attack evaluation. Make sure afterwards to block moves. 
-	/*int piece_owner = piece_on_coords->get_owner();
-	if (((piece_owner == 2) && player1_turn)
-		|| (piece_owner == 1) && !player1_turn) {
-		previous_piece = selected_piece;
-		if (previous_piece != nullptr) {
-			previous_piece_start_coords = { previous_piece->getX() , previous_piece->getY() };
-		}
-		selected_piece = nullptr; 
-		return nullptr;
-	}*/
 	previous_piece = selected_piece; 
 	selected_piece = piece_on_coords;
 	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };

@@ -41,7 +41,8 @@ Piece& Piece::move(sf::Vector2f newPos, int posX, int posY) {
 void Piece::draw(sf::RenderTarget& window)
 {
 	window.draw(*m_sprite);
-	window.draw(hp_bar); 
+	window.draw(hp_bar);
+	window.draw(hp_outter); 
 }
 
 //==========================================================================

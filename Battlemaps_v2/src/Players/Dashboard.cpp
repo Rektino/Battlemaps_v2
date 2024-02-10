@@ -4,7 +4,7 @@
 Dashboard::Dashboard() = default;
 
 
-
+//updates player's actions left for this turn	
 void Dashboard::updateActions(int actionsLeft)
 {
 	actions_left = actionsLeft;

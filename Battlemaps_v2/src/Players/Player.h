@@ -36,11 +36,14 @@ public :
 	void move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid); 
 	void attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece);	
 	bool all_pieces_on_map();
+	void reset_piece_player_actions();
+	void lock_player_actions(); 
 	bool is_available_move(std::vector<int> coords); 
 	std::string get_piece_info(std::shared_ptr<Piece> piece_ptr);	
 	int get_id() { return m_id;  }
 	const std::vector<std::vector<int>>& get_available_moves() { return available_moves;  }
 	const std::vector<std::vector<int>>& get_available_attacks() { return available_attacks; }
+	bool has_locked_actions() { return locked_actions; }
 	sf::Texture assign_texture(const std::string* paths, ptrdiff_t i);
 	//sf::Sprite create_sprite(sf::Texture& texture); 
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 
@@ -50,6 +53,7 @@ public :
 private : 
 	int m_id; 
 	Dashboard m_dashboard; 
+	bool locked_actions{ false }; 
 	std::vector<std::shared_ptr<Piece>> m_pieces; 
 	std::vector<std::shared_ptr<sf::Sprite>> m_sprites; 
 	std::vector<sf::Texture> m_textures; 

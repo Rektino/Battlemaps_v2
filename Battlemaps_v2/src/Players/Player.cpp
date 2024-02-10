@@ -213,6 +213,8 @@ void Player::drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mousePos_f, i
 	piece->move(mousePos_f, x, y);
 }
 
+
+//used to place a piece only after dragging it (for both Placement and Action game stages ) 
 void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
 {
 	assert(piece != nullptr); 
@@ -261,10 +263,15 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 				break;
 			}
 		}
-		if (valid_square) {
+		if (valid_square && piece->get_moves_left() > 0 ) {
 			piece->move(pos_vect_f , x ,y);
+			piece->update_moves_left(piece->get_moves_left() - 1);
 			grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
 			grid.set_piece_on_cell(piece, x, y); 
+			m_dashboard.updateActions(m_dashboard.get_actions() - 1); 
+			if (m_dashboard.get_actions() == 0) {
+				lock_player_actions(); 
+			}
 			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
 				"," << start_coords[1] << ")\n";
 			std::cout << std::boolalpha << "piece on starting coords = nullptr :  "
@@ -283,11 +290,17 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 
 void Player::move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
 {
+	assert(piece != nullptr); 
 	sf::Vector2f pos_vect_f = grid.get_position_vector2f(x, y);
 	std::vector<int> start_coords = grid.get_start_coords();
 	piece->move(pos_vect_f, x, y); 
+	piece->update_moves_left(piece->get_moves_left() - 1); 
 	grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1)); 
 	grid.set_piece_on_cell(piece, x, y); 
+	m_dashboard.updateActions(m_dashboard.get_actions() - 1);
+	if (m_dashboard.get_actions() == 0) {
+		lock_player_actions(); 
+	}
 }
 
 void Player::attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece)
@@ -303,6 +316,24 @@ bool Player::all_pieces_on_map()
 		}
 	}
 	return true;
+}
+
+void Player::reset_piece_player_actions()
+{
+	for (auto& piece : m_pieces) {
+		piece->update_moves_left(1); 
+		piece->update_attacks_left(1); 
+		//TODO : what if an effect is active allowing extra moves/attack even in next turn ? 
+		//idea : update these pieces separately (effect active) and use a turn_counter_effect private value to 
+		//count the turns for which the effect has been active.  
+	}
+	m_dashboard.updateActions(PLAYER_ACTIONS); 
+	locked_actions = false; 
+}
+
+void Player::lock_player_actions()
+{
+	locked_actions = true;
 }
 
 bool Player::is_available_move(std::vector<int> coords)

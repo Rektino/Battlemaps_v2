@@ -60,6 +60,8 @@ int main()
         player2.draw(main_window, grid);
         main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
+        Player& player = (player1_turn ? player1 : player2);
+        dashboard_info.setString(player.get_dashboard().getInfoAsString()); 
         main_window.draw(dashboard_info); 
         if (my_rulebook.is_active()) {
             my_rulebook.draw(main_window);
@@ -77,23 +79,41 @@ int main()
         sf::Event event; 
         while (main_window.pollEvent(event)) {  
             Timer t1; 
-            std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
-            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window)); 
-            Player& player = (player1_turn ? player1 : player2);
+            /* PRIORITY EVENTS FOR MENU AND WINDOW CLOSE : */
             if (event.type == sf::Event::Closed) {
                 std::cout << "WINDOW CLOSED !!";
                 main_window.close();
             }
             else if (ESC_pressed(event)) {
-                std::cout << "ESCAPE key pressed\n"; 
-                game_menu.toggle_state();                 
+                std::cout << "ESCAPE key pressed\n";
+                game_menu.toggle_state();
             }
             else if (H_pressed(event)) {
-                std::cout << "H key pressed\n"; 
-                my_rulebook.toggle_state(); 
+                std::cout << "H key pressed\n";
+                my_rulebook.toggle_state();
             }
-            else if (SELECTING_PIECE(event , event_state)) {
-                std::cout << "@@ SELECTION @@\n";  
+            /* ACTIONS LOCK AND END TURN BUTTON POLLING*/
+            std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
+            sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));             
+            if (player.has_locked_actions()) {
+                std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);
+                sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left
+                && end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
+                    player1_turn = !player1_turn;
+                    playSound(Sounds::victory, sounds_vector);
+                    current_piece_info.setString("");
+                    player.reset_piece_player_actions(); 
+                }
+                break; 
+            }
+            /* MAIN GAME LOGIC EVENTS */            
+            else if (SELECTING_PIECE(event , event_state)) {                
+                std::cout << "@@ SELECTION @@\n";
+                auto piece_on_mouse = grid.get_piece_on_cell(mouse_cell_i);
+                //TODO : Somehow I need to disallow any selection in case the piece on mouse coords has 0 moves available (but what if
+                // it has attacks available). I need some strategy to face this.
+                //idea : piece moving allowed only if it has available moves. Selection happens normally. 
                 if (grid.set_selected_piece(player1_turn, mouse_cell_i) != nullptr) {
                     event_state = Event_states::selected_piece; 
                     playSound(Sounds::selection, sounds_vector);
@@ -103,28 +123,30 @@ int main()
                         player.evaluate_actions(grid, grid.get_selected_piece()); 
                         grid.activate_available_cells(player.get_available_moves(), sf::Color::Magenta); 
                         grid.activate_available_cells(player.get_available_attacks(), sf::Color::Red);
-
                     }
                     else if (game_state == action && grid.get_selected_piece()->get_owner() != player.get_id() 
-                        && grid.get_previous_piece() != nullptr &&  grid.get_previous_piece()->get_owner() == player.get_id()) {
+                        && grid.get_previous_piece() != nullptr &&  grid.get_previous_piece()->get_owner() == player.get_id()
+                        && grid.get_selected_piece()->get_attacks_left() > 0) {
                         player.attack_piece(grid.get_previous_piece(), grid.get_selected_piece()); 
                     }
                 }
                 else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
                     player1_turn = !player1_turn;
-                    if (player1_turn) game_state = Game_states::action;
+                    if (player1_turn && game_state == placement) game_state = Game_states::action;
                     playSound(Sounds::victory, sounds_vector);
                     current_piece_info.setString("");
                 }
                 else {
                     current_piece_info.setString("");
-                    bool is_move = (grid.get_previous_piece() != nullptr) && (grid.get_previous_piece()->get_owner() == player.get_id())
-                        && (game_state == action) && (player.is_available_move(mouse_cell_i));
+                    auto prev_piece = grid.get_previous_piece(); 
+                    bool is_move = (prev_piece != nullptr) && (prev_piece->get_owner() == player.get_id())
+                        && (game_state == action) && (prev_piece->get_moves_left() > 0) && (player.is_available_move(mouse_cell_i));
                     if (is_move) {
                         auto start_coords = grid.get_start_coords();
                         player.move_piece(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1) , grid); 
                         grid.set_piece_on_cell(nullptr, start_coords.at(0), start_coords.at(1));
                         grid.set_piece_on_cell(grid.get_previous_piece(), mouse_cell_i.at(0), mouse_cell_i.at(1)) ;
+                        playSound(Sounds::piece_move, sounds_vector);
                     }
                     grid.deactivate_all_cells();
                     grid.set_previous_piece(nullptr); 
