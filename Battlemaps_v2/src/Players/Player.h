@@ -50,6 +50,7 @@ public :
 	void create_pieces(); 
 	void place_pieces(Grid& grid); 
 	const Dashboard& get_dashboard() { return m_dashboard; }
+	void update_dashboard_text(Grid& grid); 
 private : 
 	int m_id; 
 	Dashboard m_dashboard; 

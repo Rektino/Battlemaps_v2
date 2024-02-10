@@ -33,6 +33,7 @@ void Player::draw(sf::RenderTarget& window, Grid& grid)
 	for (auto& piece_ptr : m_pieces) {
 		piece_ptr->draw(window);
 	}
+	m_dashboard.draw(window); 
 }
 
 //Evaluates available moves and attacks of the current player, based on the selected piece
@@ -430,3 +431,19 @@ void Player::place_pieces(Grid& grid)
 		i++;
 	}
 }
+
+void Player::update_dashboard_text(Grid& grid)
+{
+	std::string info_str = m_dashboard.getInfoAsString(); 
+	m_dashboard.set_text(info_str, 26U, sf::Color::Black);
+	if (m_id == 1) {
+		m_dashboard.move_text(grid.get_position_vector2f(15, 2));
+	}
+	else {
+		m_dashboard.move_text(grid.get_position_vector2f(15, 6));
+	}
+	
+	//edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
+	//edit_text(p2_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 6));	
+}
+

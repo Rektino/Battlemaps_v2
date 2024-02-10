@@ -22,11 +22,15 @@ int main()
     Player player2(2, main_window, grid);
     player1.place_pieces(grid);    
     player2.place_pieces(grid); 
+    player1.update_dashboard_text(grid); 
+    player2.update_dashboard_text(grid); 
     sf::Font default_font;
     default_font.loadFromFile(font_paths[0]); 
     sf::Text current_piece_info("", default_font, 18);
-    sf::Text dashboard_info(player1.get_dashboard().getInfoAsString(), default_font, 24);
-    edit_text(dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 4));
+    //sf::Text p1_dashboard_info(player1.get_dashboard().getInfoAsString(), default_font, 24);
+    //sf::Text p2_dashboard_info(player2.get_dashboard().getInfoAsString(), default_font, 24); 
+    //edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
+    //edit_text(p2_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 6));
     /**************************************/
     /*------ Create sounds -----*/
     /**************************************/
@@ -61,8 +65,8 @@ int main()
         main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
         Player& player = (player1_turn ? player1 : player2);
-        dashboard_info.setString(player.get_dashboard().getInfoAsString()); 
-        main_window.draw(dashboard_info); 
+        player1.update_dashboard_text(grid); 
+        player2.update_dashboard_text(grid); 
         if (my_rulebook.is_active()) {
             my_rulebook.draw(main_window);
         }        
