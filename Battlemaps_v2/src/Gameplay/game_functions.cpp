@@ -20,4 +20,22 @@ bool check_end_turn(Game_states game_stage, bool player1_turn, Player& player1, 
 		return false; 
 		break;
 	}
+	return false; 
+}
+
+void remove_dead_pieces(Grid& grid, Player& player1, Player& player2)
+{
+	auto& p1_pieces = player1.m_pieces;
+	auto& p2_pieces = player2.m_pieces; 
+	p1_pieces.erase(std::remove_if(p1_pieces.begin() , p1_pieces.end() , 
+		[](const auto& piece_ptr) {
+			return (piece_ptr->get_hp() <= 0);
+		}),
+		p1_pieces.end());
+	p2_pieces.erase(std::remove_if(p2_pieces.begin(), p2_pieces.end(),
+		[](const auto& piece_ptr) {
+			return (piece_ptr->get_hp() <= 0);
+		}),
+		p2_pieces.end()); 
+	grid.remove_dead_from_grid(); 
 }

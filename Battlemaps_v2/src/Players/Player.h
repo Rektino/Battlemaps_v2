@@ -11,6 +11,7 @@
 #include "Sniper.h"
 #include "Healer.h"
 #include "Commander.h"
+#include <cmath>
 
 enum Directions {
 	NORTH,
@@ -39,6 +40,7 @@ public :
 	void reset_piece_player_actions();
 	void lock_player_actions(); 
 	bool is_available_move(std::vector<int> coords); 
+	bool is_available_attack(std::vector<int> coords); 
 	std::string get_piece_info(std::shared_ptr<Piece> piece_ptr);	
 	int get_id() { return m_id;  }
 	const std::vector<std::vector<int>>& get_available_moves() { return available_moves;  }
@@ -51,6 +53,7 @@ public :
 	void place_pieces(Grid& grid); 
 	const Dashboard& get_dashboard() { return m_dashboard; }
 	void update_dashboard_text(Grid& grid); 
+	friend void remove_dead_pieces(Grid& grid, Player& player1, Player& player2);
 private : 
 	int m_id; 
 	Dashboard m_dashboard; 

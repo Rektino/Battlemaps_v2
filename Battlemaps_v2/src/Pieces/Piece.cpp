@@ -77,9 +77,8 @@ void Piece::update_hp_bar()
 		max_hp = COMMANDER_HP;
 	}
 	percentage = static_cast<float>(current_hp) / static_cast<float>(max_hp);
-
-	if (percentage < 0.05) {
-		percentage = 0.05f;
+	if (percentage < 0.0) {
+		percentage = 0.0; 
 	}
 	if (percentage < 0.25) {
 		hp_bar.setFillColor(sf::Color(253, 51, 28));

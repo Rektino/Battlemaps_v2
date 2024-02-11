@@ -64,7 +64,6 @@ std::vector<int> Grid::get_mouse_cell(sf::Window& window)
 
 float Grid::getCellPositionX(int x, int y)
 {
-	std::cout << "Trying to access cell (" << x << "," << y << ")\n";
 	assert(x < GRID_SIZE_X && y < GRID_SIZE_Y);
 	return std::floor(map[x][y].getPosition().x + map[x][y].getWidth() / 2.0f);
 }
@@ -144,6 +143,20 @@ std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn, std::vector<i
 	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };
 	activate_particular_cell(coords);
 	return selected_piece;
+}
+
+
+void Grid::remove_dead_from_grid()
+{
+	for (auto& row : map) {
+		for (auto& cell : row) {
+			auto& piece = cell.getPiece();
+			if (piece == nullptr) continue; 
+			if (piece->get_hp() <= 0) {
+				cell.setPiece(nullptr); 
+			}
+		}
+	}
 }
 
 std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)

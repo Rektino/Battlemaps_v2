@@ -1,5 +1,11 @@
 #include "Player.h"
 
+template<typename T>
+requires std::totally_ordered<T>
+static inline T max(T val1, T val2) {
+	return (val1 > val2 ? val1 : val2); 
+}
+
 Player::Player(int id, sf::RenderWindow& window, Grid& grid)
 	: m_id(id), m_dashboard(3, numPieces, 100)
 {
@@ -155,45 +161,45 @@ void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
 				target = grid.obtain_target(posX, posY, enemy); 
 			}else
 			if (dir == NORTHEAST) {
-				posX = x + 1;
-				posY = y - 1;
+				posX = x + distance;
+				posY = y - distance;
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			else
 			if (dir == EAST) {
-				posX = x + 1;
+				posX = x + distance;
 				posY = y;			
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			else
 			if (dir == SOUTHEAST) {
-				posX = x + 1;
-				posY = y + 1;			
+				posX = x + distance;
+				posY = y + distance;
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			else
 			if (dir == SOUTH) {
 				posX = x;
-				posY = y + 1;			
+				posY = y + distance;
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			else
 			if (dir == SOUTHWEST) {
-				posX = x - 1;
-				posY = y + 1;
+				posX = x - distance;
+				posY = y + distance;
 				target = grid.obtain_target(posX, posY, enemy);
 			
 			}
 			else
 			if (dir == WEST) {
-				posX = x - 1;
+				posX = x - distance;
 				posY = y;			
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			else
 			if (dir == NORTHWEST) {
-				posX = x - 1;
-				posY = y - 1;			
+				posX = x - distance;
+				posY = y - distance;
 				target = grid.obtain_target(posX, posY, enemy);
 			}
 			if (target.size() != 0) {
@@ -272,6 +278,7 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 			m_dashboard.updateActions(m_dashboard.get_actions() - 1); 
 			if (m_dashboard.get_actions() == 0) {
 				lock_player_actions(); 
+				grid.deactivate_all_cells(); 
 			}
 			std::cout << "DBG msg : Placed piece on " << x << "," << y << "and deleted piece_ptr from map(" << start_coords[0] <<
 				"," << start_coords[1] << ")\n";
@@ -301,12 +308,34 @@ void Player::move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
 	m_dashboard.updateActions(m_dashboard.get_actions() - 1);
 	if (m_dashboard.get_actions() == 0) {
 		lock_player_actions(); 
+		grid.deactivate_all_cells(); 
 	}
 }
 
 void Player::attack_piece(std::shared_ptr<Piece> my_piece, std::shared_ptr<Piece> enemy_piece)
 {
-	std::cout << "Attack piece called\n"; 
+	std::cout << "Attack piece called\n";
+	std::cout << "Attacking piece at " << enemy_piece->getX() << " , " << enemy_piece->getY() << "\n"; 
+	int attacker_dmg = my_piece->get_dmg(); 
+	int defender_dmg = enemy_piece->get_dmg(); 
+	int attacker_hp = my_piece->get_hp(); 
+	int defender_hp = enemy_piece->get_hp();
+	int defender_range = enemy_piece->get_range(); 
+	int dx = abs(my_piece->getX() - enemy_piece->getX()); 
+	int dy = abs(my_piece->getY() - enemy_piece->getY()); 
+	int distance = max(dx, dy); 
+	//Perform attack : 
+	enemy_piece->set_hp(defender_hp - attacker_dmg); 
+	if (enemy_piece->get_hp() > 0 && defender_range >= distance) {
+		my_piece->set_hp(attacker_hp - defender_dmg);  
+		my_piece->update_hp_bar();
+	}	
+	enemy_piece->update_hp_bar(); 
+	my_piece->update_attacks_left(my_piece->get_attacks_left() - 1); 	
+	m_dashboard.updateActions(m_dashboard.get_actions() - 1); 
+	if (m_dashboard.get_actions() == 0) {
+		lock_player_actions();
+	}
 }
 
 bool Player::all_pieces_on_map()
@@ -342,6 +371,16 @@ bool Player::is_available_move(std::vector<int> coords)
 	for (const auto& move_coords : available_moves) {
 		if (move_coords.at(0) == coords.at(0) && move_coords.at(1) == coords.at(1)) {
 			return true; 
+		}
+	}
+	return false;
+}
+
+bool Player::is_available_attack(std::vector<int> coords)
+{
+	for (const auto& attack_coords : available_attacks) {
+		if (attack_coords.at(0) == coords.at(0) && attack_coords.at(1) == coords.at(1)) {
+			return true;
 		}
 	}
 	return false;

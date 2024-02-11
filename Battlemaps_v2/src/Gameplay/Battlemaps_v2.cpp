@@ -105,9 +105,10 @@ int main()
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left
                 && end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
                     player1_turn = !player1_turn;
-                    playSound(Sounds::victory, sounds_vector);
+                    playSound(Sounds::press_endturn, sounds_vector);
                     current_piece_info.setString("");
                     player.reset_piece_player_actions(); 
+                    remove_dead_pieces(grid, player1, player2); 
                 }
                 break; 
             }
@@ -115,29 +116,34 @@ int main()
             else if (SELECTING_PIECE(event , event_state)) {                
                 std::cout << "@@ SELECTION @@\n";
                 auto piece_on_mouse = grid.get_piece_on_cell(mouse_cell_i);
-                //TODO : Somehow I need to disallow any selection in case the piece on mouse coords has 0 moves available (but what if
-                // it has attacks available). I need some strategy to face this.
-                //idea : piece moving allowed only if it has available moves. Selection happens normally. 
                 if (grid.set_selected_piece(player1_turn, mouse_cell_i) != nullptr) {
+                    auto selected_piece = grid.get_selected_piece(); 
+                    auto previous_piece = grid.get_previous_piece(); 
                     event_state = Event_states::selected_piece; 
-                    playSound(Sounds::selection, sounds_vector);
-                    current_piece_info.setString(player.get_piece_info(grid.get_selected_piece()));
+                    if (selected_piece->get_owner() == player.get_id()) {
+                        playSound(Sounds::selection, sounds_vector);
+                    }
+                    current_piece_info.setString(player.get_piece_info(selected_piece));
                     edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0));
-                    if (game_state == action && grid.get_selected_piece()->get_owner() == player.get_id()) {
-                        player.evaluate_actions(grid, grid.get_selected_piece()); 
+                    if (game_state == action && selected_piece->get_owner() == player.get_id()) 
+                    {
+                        player.evaluate_actions(grid, selected_piece); 
                         grid.activate_available_cells(player.get_available_moves(), sf::Color::Magenta); 
                         grid.activate_available_cells(player.get_available_attacks(), sf::Color::Red);
                     }
-                    else if (game_state == action && grid.get_selected_piece()->get_owner() != player.get_id() 
-                        && grid.get_previous_piece() != nullptr &&  grid.get_previous_piece()->get_owner() == player.get_id()
-                        && grid.get_selected_piece()->get_attacks_left() > 0) {
-                        player.attack_piece(grid.get_previous_piece(), grid.get_selected_piece()); 
+                    else if (game_state == action && selected_piece->get_owner() != player.get_id() 
+                        && previous_piece != nullptr &&  previous_piece->get_owner() == player.get_id()
+                        && previous_piece->get_attacks_left() > 0
+                        && player.is_available_attack({selected_piece->getX() , selected_piece->getY()})) 
+                    {
+                        player.attack_piece(previous_piece, selected_piece); 
+                        playPieceSound(previous_piece, sounds_vector); 
                     }
                 }
                 else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
                     player1_turn = !player1_turn;
                     if (player1_turn && game_state == placement) game_state = Game_states::action;
-                    playSound(Sounds::victory, sounds_vector);
+                    playSound(Sounds::press_endturn, sounds_vector);
                     current_piece_info.setString("");
                 }
                 else {

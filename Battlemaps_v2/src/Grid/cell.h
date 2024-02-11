@@ -22,7 +22,7 @@ public :
 	cell()= delete ;
 	cell(sf::RenderWindow& window,  int x, int y);
 	std::shared_ptr<Piece>& getPiece() { return piece_here;  };
-	void setPiece(std::shared_ptr<Piece>& piece) {		
+	void setPiece(std::shared_ptr<Piece> piece) {		
 		piece_here = piece;  
 	}
 	void clean() { piece_here = nullptr;  }

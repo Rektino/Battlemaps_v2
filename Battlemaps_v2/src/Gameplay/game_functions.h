@@ -2,3 +2,4 @@
 
 bool check_end_turn(Game_states game_stage ,bool player1_turn, Player& player1, Player& player2); 
 
+void remove_dead_pieces(Grid& grid, Player& player1, Player& player2); 

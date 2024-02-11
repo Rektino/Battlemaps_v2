@@ -72,7 +72,7 @@ const std::string p2_texturePaths[8] = {
     // Add paths for the remaining piece types here
 };
 
-const std::string soundPaths[11] = {
+const std::string soundPaths[13] = {
     //"C:/Users/geode/Documents/VS projects GEO/SFML test/Project1/sounds/clickButton_sound.wav" ,  //selection
     "sounds/clickButton_sound.wav" ,  //selection
     "sounds/sword-hit.mp3" ,  // warrior
@@ -83,8 +83,10 @@ const std::string soundPaths[11] = {
     "sounds/pistol-shot.mp3" , //sniper
     "sounds/shield.mp3" ,      //defender 
     "sounds/commander.mp3", //commander
-    "sounds/success-sound.mp3" , //victory
+    "sounds/success-sound.mp3" , //success
     "sounds/placement_sound.mp3" // placement
+    "sounds/endturn_press.mp3", //press end Turn
+    "sounds/victory.mp3" //end game victory 
 
 };
 

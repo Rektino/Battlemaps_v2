@@ -15,8 +15,10 @@ enum Sounds {
 	snipe,
 	shield,
 	commander,
-	victory,
+	success,
 	piece_move,
+	press_endturn, 
+	victory, 
 	number_of_sounds
 };
 

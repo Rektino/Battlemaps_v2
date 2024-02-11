@@ -26,6 +26,7 @@ public :
 	std::shared_ptr<Piece> set_selected_piece(bool player1_turn , std::vector<int> coords); 
 	void set_previous_piece(std::shared_ptr<Piece> piece) { previous_piece = piece;  } 
 	void clear_selected_piece() { selected_piece = nullptr;  }
+	void remove_dead_from_grid(); 
 	std::shared_ptr<Piece> get_selected_piece() { return selected_piece; }
 	std::shared_ptr<Piece> get_previous_piece() { return previous_piece;  }
 	std::vector<int> get_start_coords() { return movement_start_coords;  }
@@ -34,7 +35,7 @@ public :
 	std::shared_ptr<Piece> get_piece_on_cell(std::vector<int> coords_i); 	
 	bool is_free_cell(int posX, int posY); 
 	std::vector<int> obtain_target(int posX, int posY, int enemy); 
-	friend bool mouse_over_piece(Grid& grid, sf::Vector2f position_f);
+	friend bool mouse_over_piece(Grid& grid, sf::Vector2f position_f);	
 private: 	
 	static std::shared_ptr<Piece> previous_piece; 
 	static std::shared_ptr<Piece> selected_piece;	 
