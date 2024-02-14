@@ -15,10 +15,13 @@ public:
 	void set_hp(int val) override ; 
 	void set_dmg(int val) override;
 	void set_owner(int player) { owner = player; }	
-	const std::string_view getType() override { return "Warrior"; }
+	const std::string_view getType() override { return "Warrior"; }	
+	void draw_descriptor(sf::RenderTarget& window) override { m_descriptor.draw(window);  }
 	static const std::string description;
+	piece_descriptor& get_descriptor() override { return m_descriptor;  }
 private:
-	int owner{}; 	
+	piece_descriptor m_descriptor;
+	int owner{};
 	int hp{ WARRIOR_HP };
 	int dmg{ WARRIOR_DMG };
 	int range{ WARRIOR_RANGE};

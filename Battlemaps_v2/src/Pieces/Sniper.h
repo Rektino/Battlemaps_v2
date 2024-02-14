@@ -16,8 +16,11 @@ public:
 	void set_owner(int player) { owner = player; }
 	const std::string_view getType() override { return "Sniper"; }
 	static const std::string description ;
+	void draw_descriptor(sf::RenderTarget& window) override { m_descriptor.draw(window); }
+	piece_descriptor& get_descriptor() override { return m_descriptor; }
 private:
-	int owner{};	
+	piece_descriptor m_descriptor;
+	int owner{};
 	int hp{ SNIPER_HP };
 	int dmg{ SNIPER_DMG };
 	int range{ SNIPER_RANGE };

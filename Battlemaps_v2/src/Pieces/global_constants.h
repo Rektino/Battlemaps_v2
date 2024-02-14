@@ -36,9 +36,10 @@ constexpr unsigned MENU_BTN_TEXT_SIZE = 45U;
 
 //File paths for fonts :
 
-const std::string font_paths[2] = {
+const std::string font_paths[3] = {
     "fonts/JosefinSans-SemiBold.ttf" ,
-    "fonts/JosefinSans-Bold.ttf"
+    "fonts/JosefinSans-Bold.ttf",
+    "fonts/life_is_goofy.ttf"
 };
 
 const std::string icons_texture_paths[2] = {
@@ -84,7 +85,7 @@ const std::string soundPaths[13] = {
     "sounds/shield.mp3" ,      //defender 
     "sounds/commander.mp3", //commander
     "sounds/success-sound.mp3" , //success
-    "sounds/placement_sound.mp3" // placement
+    "sounds/placement_sound.mp3", // placement
     "sounds/endturn_press.mp3", //press end Turn
     "sounds/victory.mp3" //end game victory 
 

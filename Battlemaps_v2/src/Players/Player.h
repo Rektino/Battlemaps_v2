@@ -53,6 +53,7 @@ public :
 	void place_pieces(Grid& grid); 
 	const Dashboard& get_dashboard() { return m_dashboard; }
 	void update_dashboard_text(Grid& grid); 
+	void update_piece_descriptors(); 
 	friend void remove_dead_pieces(Grid& grid, Player& player1, Player& player2);
 private : 
 	int m_id; 

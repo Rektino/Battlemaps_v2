@@ -1,6 +1,6 @@
 #include "Commander.h"
 
-Commander::Commander(int player) : owner(player) {}; 
+Commander::Commander(int player) : owner(player) , m_descriptor() {};
 
 const int Commander::get_hp() { return hp; }
 const int Commander::get_dmg() { return dmg; }

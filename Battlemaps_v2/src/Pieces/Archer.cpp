@@ -1,6 +1,6 @@
 #include "Archer.h"
 
-Archer::Archer(int player) : owner(player) {}; 
+Archer::Archer(int player) : owner(player), m_descriptor() {};
 
 const int Archer::get_hp() { return hp; }
 const int Archer::get_dmg() { return dmg; }

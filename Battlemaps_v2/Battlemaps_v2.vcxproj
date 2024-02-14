@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Pieces\piece_descriptor.cpp" />
     <ClCompile Include="src\Events &amp; Mouse\mouse_hover.cpp" />
     <ClCompile Include="src\Events &amp; Mouse\Timer.cpp" />
     <ClCompile Include="src\Gameplay\Battlemaps_v2.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="src\Widgets\sounds.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Pieces\piece_descriptor.h" />
     <ClInclude Include="src\Widgets\edit_widgets.h" />
     <ClInclude Include="src\Events &amp; Mouse\mouse_hover.h" />
     <ClInclude Include="src\Events &amp; Mouse\Timer.h" />

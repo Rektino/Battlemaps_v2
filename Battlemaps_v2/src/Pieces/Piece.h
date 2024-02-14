@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include "global_constants.h"
+#include "piece_descriptor.h"
 
 enum PieceType {
 	War,
@@ -43,7 +44,9 @@ public:
 	virtual const std::string_view get_description() = 0;
 	virtual const std::string_view getType() = 0;
 	Piece& move(sf::Vector2f newPos, int posX, int posY);
-	void draw(sf::RenderTarget& window); 
+	void draw(sf::RenderTarget& window);	 
+	virtual void draw_descriptor(sf::RenderTarget& window) = 0;
+	virtual piece_descriptor& get_descriptor() = 0 ; 
 private:
 	std::shared_ptr<sf::Sprite> m_sprite; 
 	int m_x{}, m_y{};

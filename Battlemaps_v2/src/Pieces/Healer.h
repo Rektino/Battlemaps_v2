@@ -16,7 +16,10 @@ public:
 	void set_owner(int player) { owner = player; }
 	const std::string_view getType() override { return "Healer"; }
 	static const std::string description;
+	void draw_descriptor(sf::RenderTarget& window) override { m_descriptor.draw(window); }
+	piece_descriptor& get_descriptor() override { return m_descriptor; }
 private:
+	piece_descriptor m_descriptor;
 	int owner{};
 	int hp{ HEALER_HP };
 	int dmg{ HEALER_DMG };

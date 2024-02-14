@@ -486,3 +486,11 @@ void Player::update_dashboard_text(Grid& grid)
 	//edit_text(p2_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 6));	
 }
 
+void Player::update_piece_descriptors()
+{
+	for (auto& piece : m_pieces) {
+		piece->get_descriptor().set_all_text( static_cast<std::string>(piece->getType()) , static_cast<std::string>(piece->get_description()),
+											piece->get_hp(), piece->get_dmg());
+	}
+}
+

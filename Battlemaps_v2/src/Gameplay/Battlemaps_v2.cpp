@@ -20,13 +20,15 @@ int main()
     Rulebook my_rulebook(grid);
     Player player1(1, main_window, grid); 
     Player player2(2, main_window, grid);
+    player1.update_piece_descriptors();
+    player2.update_piece_descriptors();
     player1.place_pieces(grid);    
     player2.place_pieces(grid); 
     player1.update_dashboard_text(grid); 
     player2.update_dashboard_text(grid); 
     sf::Font default_font;
     default_font.loadFromFile(font_paths[0]); 
-    sf::Text current_piece_info("", default_font, 18);
+    //sf::Text current_piece_info("", default_font, 18);
     //sf::Text p1_dashboard_info(player1.get_dashboard().getInfoAsString(), default_font, 24);
     //sf::Text p2_dashboard_info(player2.get_dashboard().getInfoAsString(), default_font, 24); 
     //edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
@@ -62,7 +64,7 @@ int main()
         help_icon.draw(main_window);
         player1.draw(main_window, grid);
         player2.draw(main_window, grid);
-        main_window.draw(current_piece_info); 
+        //main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
         Player& player = (player1_turn ? player1 : player2);
         player1.update_dashboard_text(grid); 
@@ -78,6 +80,9 @@ int main()
         }
         else {
             end_turn_btn.deactivate(); 
+        }
+        if (grid.get_selected_piece() != nullptr) {            
+            grid.get_selected_piece()->draw_descriptor(main_window);
         }
         main_window.display();      
         sf::Event event; 
@@ -106,9 +111,8 @@ int main()
                 && end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
                     player1_turn = !player1_turn;
                     playSound(Sounds::press_endturn, sounds_vector);
-                    current_piece_info.setString("");
-                    player.reset_piece_player_actions(); 
-                    remove_dead_pieces(grid, player1, player2); 
+                    //current_piece_info.setString("");
+                    player.reset_piece_player_actions();                      
                 }
                 break; 
             }
@@ -123,8 +127,12 @@ int main()
                     if (selected_piece->get_owner() == player.get_id()) {
                         playSound(Sounds::selection, sounds_vector);
                     }
-                    current_piece_info.setString(player.get_piece_info(selected_piece));
-                    edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(11, 0));
+                    selected_piece->get_descriptor().make_visible();                    
+                    if (previous_piece != nullptr) {
+                        previous_piece->get_descriptor().hide(); 
+                    }
+                    //current_piece_info.setString(player.get_piece_info(selected_piece));
+                    //edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(13, 0));
                     if (game_state == action && selected_piece->get_owner() == player.get_id()) 
                     {
                         player.evaluate_actions(grid, selected_piece); 
@@ -138,16 +146,19 @@ int main()
                     {
                         player.attack_piece(previous_piece, selected_piece); 
                         playPieceSound(previous_piece, sounds_vector); 
+                        remove_dead_pieces(grid, player1, player2);
+                        player1.update_piece_descriptors(); 
+                        player2.update_piece_descriptors(); 
                     }
                 }
                 else if (end_turn_btn.contains(mousePos_f) && end_turn_btn.is_active()) {
                     player1_turn = !player1_turn;
                     if (player1_turn && game_state == placement) game_state = Game_states::action;
                     playSound(Sounds::press_endturn, sounds_vector);
-                    current_piece_info.setString("");
+                   // current_piece_info.setString("");
                 }
                 else {
-                    current_piece_info.setString("");
+                    //current_piece_info.setString("");
                     auto prev_piece = grid.get_previous_piece(); 
                     bool is_move = (prev_piece != nullptr) && (prev_piece->get_owner() == player.get_id())
                         && (game_state == action) && (prev_piece->get_moves_left() > 0) && (player.is_available_move(mouse_cell_i));
@@ -172,7 +183,7 @@ int main()
             else if (RELEASING_PIECE(event , event_state)) { 
                 event_state = Event_states::neutral;                
                 player.release_piece(game_state, grid.get_selected_piece(), mouse_cell_i[0], mouse_cell_i[1], grid); 
-                current_piece_info.setString("");
+                //current_piece_info.setString("");
                 grid.deactivate_all_cells(); 
                 playSound(Sounds::piece_move, sounds_vector);                   
             }         
