@@ -1,7 +1,7 @@
 #include "Defender.h"
 
 
-Defender::Defender(int player) : owner(player), m_descriptor() {};
+Defender::Defender(int player) : owner(player) {};
 
 const int Defender::get_hp() { return hp; }
 const int Defender::get_dmg() { return dmg; }

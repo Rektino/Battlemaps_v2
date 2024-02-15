@@ -43,12 +43,14 @@ public:
 	virtual void set_dmg(int val) = 0;
 	virtual const std::string_view get_description() = 0;
 	virtual const std::string_view getType() = 0;
+	std::shared_ptr<const sf::Sprite> get_sprite() { return m_sprite;  }
 	Piece& move(sf::Vector2f newPos, int posX, int posY);
 	void draw(sf::RenderTarget& window);	 
-	virtual void draw_descriptor(sf::RenderTarget& window) = 0;
-	virtual piece_descriptor& get_descriptor() = 0 ; 
+	void draw_descriptor(sf::RenderTarget& window);
+	piece_descriptor& get_descriptor() {return m_descriptor;} 
 private:
 	std::shared_ptr<sf::Sprite> m_sprite; 
+	piece_descriptor m_descriptor; 
 	int m_x{}, m_y{};
 	int moves_left{ 1 };
 	int attacks_left{ 1 };

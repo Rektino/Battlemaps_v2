@@ -1,7 +1,7 @@
 #include "Sniper.h"
 
 
-Sniper::Sniper(int player) : owner(player), m_descriptor() { };
+Sniper::Sniper(int player) : owner(player){ };
 
 const int Sniper::get_hp() { return hp; }
 const int Sniper::get_dmg() { return dmg; }

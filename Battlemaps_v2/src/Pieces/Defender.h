@@ -17,10 +17,7 @@ public:
 	void set_dmg(int val);
 	void set_owner(int player) { owner = player; }
 	static const std::string description; 
-	void draw_descriptor(sf::RenderTarget& window) override { m_descriptor.draw(window); }
-	piece_descriptor& get_descriptor() override { return m_descriptor;  }
 private:
-	piece_descriptor m_descriptor;
 	int owner{};
 	int hp{ DEFENDER_HP };
 	int dmg{ DEFENDER_DMG };

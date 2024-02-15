@@ -1,6 +1,6 @@
 #include "Assassin.h"
 
-Assassin::Assassin(int player) : owner(player) , m_descriptor() {};
+Assassin::Assassin(int player) : owner(player) {};
 
 const int Assassin::get_hp() { return hp; }
 const int Assassin::get_dmg() { return dmg; }

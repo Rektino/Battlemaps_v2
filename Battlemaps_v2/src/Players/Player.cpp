@@ -10,7 +10,7 @@ Player::Player(int id, sf::RenderWindow& window, Grid& grid)
 	: m_id(id), m_dashboard(3, numPieces, 100)
 {
 	const std::string(&texture_paths)[8] { id == 1 ? p1_texturePaths : p2_texturePaths };
-	std::cout << "PLayer constructor has been called\n";
+	std::cout << "Player constructor has been called\n";
 	cumulative_piece_sum[0] = numWarriors;
 	for (int i = 1; i < numPieceTypes; i++) {
 		cumulative_piece_sum[i] = cumulative_piece_sum[i - 1] + numPieces_array[i];
@@ -29,7 +29,9 @@ Player::Player(int id, sf::RenderWindow& window, Grid& grid)
 	std::cout << "textures vector size is = " << m_textures.size() << "\n"; 
 	int j = 0; 
 	for (auto& piece : m_pieces) {
-		piece->setSprite(m_sprites[j]); 
+		piece->setSprite(m_sprites[j]);
+		sf::Sprite sprite_copy(*m_sprites[j])  ;
+		piece->get_descriptor().set_sprite_view(sprite_copy); 
 		j++; 
 	}
 }

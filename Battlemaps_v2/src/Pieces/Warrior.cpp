@@ -4,7 +4,7 @@
 const std::string Warrior::description = { "(Berserk) : \nFor this round, attack up to 3 times\nand move up to 3 times.\n\
 Using all attacks and moves\nis not mandatory." };
 
-Warrior::Warrior(int player) : owner(player) , m_descriptor()  {};
+Warrior::Warrior(int player) : owner(player) {};
 
 const int Warrior::get_hp()  { return hp; }
 const int Warrior::get_dmg() { return dmg; }

@@ -1,7 +1,7 @@
 #include "Healer.h"
 
 
-Healer::Healer(int player) : owner(player), m_descriptor() {};
+Healer::Healer(int player) : owner(player){};
 
 const int Healer::get_hp() { return hp; }
 const int Healer::get_dmg() { return dmg; }

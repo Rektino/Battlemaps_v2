@@ -1,6 +1,6 @@
 #include "Mage.h"
 
-Mage::Mage(int player) : owner(player) , m_descriptor() {};
+Mage::Mage(int player) : owner(player) {};
 
 const int Mage::get_hp() { return hp; }
 const int Mage::get_dmg() { return dmg; }

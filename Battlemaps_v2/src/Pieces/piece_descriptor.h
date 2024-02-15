@@ -10,18 +10,20 @@ public :
 	void draw(sf::RenderTarget& window);
 	void set_all_text(const std::string piece_type , const std::string description ,
 		const int hp , const int dmg ,const int attacks_left , const int moves_left); 
+	void set_sprite_view(sf::Sprite piece_sprite); 
 	void make_visible(); 
 	void hide(); 
 private : 
 	bool is_hidden{ true }; 
 	int m_hp{0};
 	int m_dmg{0};
+	sf::Sprite m_sprite; 
 	sf::Text title_text; 
 	sf::Font title_font; 
-	unsigned int title_char_size{ 32 }; 
+	unsigned int title_char_size{ 40 }; 
 	sf::Text description_text; 
 	sf::Font description_font; 
-	unsigned int description_char_size{ DEFAULT_CHAR_SIZE }; 
+	unsigned int description_char_size{ DEFAULT_CHAR_SIZE + 2 }; 
 	sf::RectangleShape outline_rectangle; 
 };
 

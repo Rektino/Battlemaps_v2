@@ -11,7 +11,7 @@ Piece::Piece() {
 	hp_outter.setSize(sf::Vector2f(HP_BAR_SIZE_X, HP_BAR_SIZE_Y));
 	hp_outter.setFillColor(sf::Color::Transparent);
 	hp_outter.setOutlineThickness(1.2f);
-	hp_outter.setOutlineColor(sf::Color::Black);
+	hp_outter.setOutlineColor(sf::Color::Black);	 
 }
 //==========================================================================
 int Piece::getX() const { return m_x; }
@@ -43,6 +43,11 @@ void Piece::draw(sf::RenderTarget& window)
 	window.draw(*m_sprite);
 	window.draw(hp_bar);
 	window.draw(hp_outter); 
+}
+
+void Piece::draw_descriptor(sf::RenderTarget& window)
+{
+	m_descriptor.draw(window); 
 }
 
 //==========================================================================
