@@ -48,7 +48,7 @@ int main()
     end_turn_btn.setTextSize(25); 
     //end_turn_btn.setRectFillColor(sf::Color::Color(154, 246, 148)); 
     end_turn_btn.setRectFillColor(sf::Color::Transparent); 
-    end_turn_btn.setPosition(grid,grid.get_position_vector2f(12,4)); 
+    end_turn_btn.setPosition(grid,grid.get_position_vector2f(10,4)); 
     bool player1_turn = true;    
     randomize_pieces(main_window, grid, player1, player2);   
     game_state = Game_states::action; 

@@ -8,7 +8,8 @@ class piece_descriptor
 public : 
 	piece_descriptor();
 	void draw(sf::RenderTarget& window);
-	void set_all_text(const std::string piece_type , const std::string description , int hp , int dmg); 
+	void set_all_text(const std::string piece_type , const std::string description ,
+		const int hp , const int dmg ,const int attacks_left , const int moves_left); 
 	void make_visible(); 
 	void hide(); 
 private : 

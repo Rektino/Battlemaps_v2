@@ -8,13 +8,13 @@ piece_descriptor::piece_descriptor()
 	title_text.setFont(title_font); 
 	//title_text.setString(type); 
 	title_text.setFillColor(sf::Color::Black); 
-	title_text.setPosition(1100, 100); 
+	title_text.setPosition(1300, 330); 
 	description_text.setCharacterSize(description_char_size);
 	description_font.loadFromFile(font_paths[1]);
 	description_text.setFont(description_font); 
 	//description_text.setString(piece_description);
 	description_text.setFillColor(sf::Color::Black); 
-	description_text.setPosition(1100, 170); 
+	description_text.setPosition(1300, 400); 
 	outline_rectangle.setFillColor(sf::Color::Transparent); 
 	outline_rectangle.setOutlineColor(sf::Color::Magenta); 
 	outline_rectangle.setOutlineThickness(2.0f); 
@@ -33,15 +33,18 @@ void piece_descriptor::draw(sf::RenderTarget& window)
 	}
 }
 
-void piece_descriptor::set_all_text(const std::string piece_type , const std::string piece_description , int hp, int dmg)
+void piece_descriptor::set_all_text(const std::string piece_type, const std::string piece_description,
+	const int hp, const int dmg, const int attacks_left, const int moves_left)
 {
-	title_text.setString(piece_type); 	
-	std::stringstream ss_all_data; 
-	ss_all_data << piece_description <<  "\n\nHP : " << hp << "\nDMG : " << dmg << "\n"; 
-	auto all_details_str = ss_all_data.str(); 	 
-	description_text.setString(all_details_str) ;
+	title_text.setString(piece_type);
+	std::stringstream ss_all_data;
+	ss_all_data << piece_description << "\n\nHP : " << hp << "\nDMG : " << dmg << "\n---------------\n" << 
+		"Attacks left : " << attacks_left << "\nMoves left : " << moves_left <<"\n";
+	auto all_details_str = ss_all_data.str();
+	description_text.setString(all_details_str);
 	outline_rectangle.setSize({ description_text.getGlobalBounds().width + 50.0f,
 								description_text.getGlobalBounds().height + title_text.getGlobalBounds().height + 90.0f });
+
 }
 
 void piece_descriptor::make_visible()

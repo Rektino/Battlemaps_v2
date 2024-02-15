@@ -476,10 +476,10 @@ void Player::update_dashboard_text(Grid& grid)
 	std::string info_str = m_dashboard.getInfoAsString(); 
 	m_dashboard.set_text(info_str, 26U, sf::Color::Black);
 	if (m_id == 1) {
-		m_dashboard.move_text(grid.get_position_vector2f(15, 2));
+		m_dashboard.move_text(grid.get_position_vector2f(10, 2));
 	}
 	else {
-		m_dashboard.move_text(grid.get_position_vector2f(15, 6));
+		m_dashboard.move_text(grid.get_position_vector2f(10, 6));
 	}
 	
 	//edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
@@ -490,7 +490,7 @@ void Player::update_piece_descriptors()
 {
 	for (auto& piece : m_pieces) {
 		piece->get_descriptor().set_all_text( static_cast<std::string>(piece->getType()) , static_cast<std::string>(piece->get_description()),
-											piece->get_hp(), piece->get_dmg());
+											piece->get_hp(), piece->get_dmg() , piece->get_attacks_left() , piece->get_moves_left());
 	}
 }
 

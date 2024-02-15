@@ -10,4 +10,4 @@ void Healer::set_dmg(int val) { dmg = val; }
 
 
 
-const std::string Healer::description = { "For this round,\nit can heal 3 times" };
+const std::string Healer::description = { "(Bliss) : \nFor this round,\nit can heal 3 times" };

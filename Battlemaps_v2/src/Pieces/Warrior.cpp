@@ -1,8 +1,8 @@
 #include "Warrior.h"
 #include <cstdint>
 
-const std::string Warrior::description = { "For this round, attack up\nto 3 times and move up to 3 times.\n\
-Using all attacks and\n moves is not mandatory." };
+const std::string Warrior::description = { "(Berserk) : \nFor this round, attack up to 3 times\nand move up to 3 times.\n\
+Using all attacks and moves\nis not mandatory." };
 
 Warrior::Warrior(int player) : owner(player) , m_descriptor()  {};
 
