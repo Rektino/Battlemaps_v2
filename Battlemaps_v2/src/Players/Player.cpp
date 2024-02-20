@@ -6,8 +6,8 @@ static inline T max(T val1, T val2) {
 	return (val1 > val2 ? val1 : val2); 
 }
 
-Player::Player(int id, sf::RenderWindow& window, Grid& grid)
-	: m_id(id), m_dashboard(3, numPieces, 100)
+Player::Player(const std::string username , int id, sf::RenderWindow& window, Grid& grid)
+	: m_username(username) ,  m_id(id), m_dashboard(username, 3, 100)
 {
 	const std::string(&texture_paths)[8] { id == 1 ? p1_texturePaths : p2_texturePaths };
 	std::cout << "Player constructor has been called\n";
@@ -473,6 +473,13 @@ void Player::place_pieces(Grid& grid)
 	}
 }
 
+void Player::place_descriptors(Grid& grid)
+{
+	for (auto& piece : m_pieces) {
+		piece->set_descriptor_position2f(grid.get_position_vector2f(13, 3));
+	}
+}
+
 void Player::update_dashboard_text(Grid& grid)
 {
 	std::string info_str = m_dashboard.getInfoAsString(); 
@@ -481,11 +488,33 @@ void Player::update_dashboard_text(Grid& grid)
 		m_dashboard.move_text(grid.get_position_vector2f(10, 2));
 	}
 	else {
-		m_dashboard.move_text(grid.get_position_vector2f(10, 6));
+		m_dashboard.move_text(grid.get_position_vector2f(10, 7));
 	}
 	
 	//edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
 	//edit_text(p2_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 6));	
+}
+
+void Player::update_average_hp()
+{
+	float sum = 0; 
+	float max_sum = 0 ; 
+	int counter = 0; 
+	float avg; 
+	float max_avg; 
+	for (const auto& piece : m_pieces) {
+		sum += piece->get_hp(); 
+		max_sum += piece->get_max_hp(); 
+		counter += 1; 
+	}
+	if (counter >= 0) {
+		avg = sum / counter;
+		max_avg = max_sum / counter; 
+	}
+	else {
+		return; 
+	}	
+	m_dashboard.set_avg_hp(avg , max_avg); 
 }
 
 void Player::update_piece_descriptors()

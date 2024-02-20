@@ -5,9 +5,11 @@
 
 int main()
 {
-    sf::VideoMode fullscreenMode = sf::VideoMode::getFullscreenModes()[0]; // Get the first available fullscreen mode
+    sf::VideoMode fullscreenMode = sf::VideoMode::getFullscreenModes()[2]; // Get the first available fullscreen mode
     sf::RenderWindow main_window(fullscreenMode, "BattleMaps", sf::Style::Close);
     sf::Image icon; 
+    sf::Cursor arrow_global_cursor;
+    arrow_global_cursor.loadFromSystem(sf::Cursor::Arrow);
     icon.loadFromFile("icons/game_icon.png"); 
     main_window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr()); 
     /************************************/
@@ -18,21 +20,19 @@ int main()
     Menu_icon menu_icon(main_window , grid) ;     
     Help_icon help_icon(main_window, grid); 
     Rulebook my_rulebook(grid);
-    Player player1(1, main_window, grid); 
-    Player player2(2, main_window, grid);
+    Player player1("Hero" , 1, main_window, grid); 
+    Player player2("Villain" , 2, main_window, grid);
     player1.update_piece_descriptors();
     player2.update_piece_descriptors();
     player1.place_pieces(grid);    
     player2.place_pieces(grid); 
+    player1.place_descriptors(grid); 
+    player2.place_descriptors(grid); 
     player1.update_dashboard_text(grid); 
     player2.update_dashboard_text(grid); 
     sf::Font default_font;
     default_font.loadFromFile(font_paths[0]); 
-    //sf::Text current_piece_info("", default_font, 18);
-    //sf::Text p1_dashboard_info(player1.get_dashboard().getInfoAsString(), default_font, 24);
-    //sf::Text p2_dashboard_info(player2.get_dashboard().getInfoAsString(), default_font, 24); 
-    //edit_text(p1_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 2));
-    //edit_text(p2_dashboard_info, sf::Color::Black, 24U, grid.get_position_vector2f(15, 6));
+    
     /**************************************/
     /*------ Create sounds -----*/
     /**************************************/
@@ -64,9 +64,9 @@ int main()
         help_icon.draw(main_window);
         player1.draw(main_window, grid);
         player2.draw(main_window, grid);
-        //main_window.draw(current_piece_info); 
         end_turn_btn.draw(main_window); 
-        Player& player = (player1_turn ? player1 : player2);
+        Player& player = (player1_turn ? player1 : player2);   
+        auto selected_piece = grid.get_selected_piece(); 
         player1.update_dashboard_text(grid); 
         player2.update_dashboard_text(grid); 
         if (my_rulebook.is_active()) {
@@ -81,12 +81,12 @@ int main()
         else {
             end_turn_btn.deactivate(); 
         }
-        if (grid.get_selected_piece() != nullptr) {            
-            grid.get_selected_piece()->draw_descriptor(main_window);
+        if (selected_piece != nullptr) {            
+            selected_piece->draw_descriptor(main_window);
         }
-        main_window.display();      
-        sf::Event event; 
-        while (main_window.pollEvent(event)) {  
+        main_window.display();  
+        sf::Event event;
+        while (main_window.pollEvent(event)) {            
             Timer t1; 
             /* PRIORITY EVENTS FOR MENU AND WINDOW CLOSE : */
             if (event.type == sf::Event::Closed) {
@@ -101,10 +101,16 @@ int main()
                 std::cout << "H key pressed\n";
                 my_rulebook.toggle_state();
             }
+            else if (E_pressed(event) && selected_piece != nullptr &&
+                selected_piece->get_owner() == player.get_id() && selected_piece->effect_is_available()) 
+            {
+                selected_piece.activate_effect(); 
+            }
             /* ACTIONS LOCK AND END TURN BUTTON POLLING*/
             std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
             sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));             
             if (player.has_locked_actions()) {
+                main_window.setMouseCursor(arrow_global_cursor);
                 std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);
                 sf::Vector2f mousePos_f = main_window.mapPixelToCoords(sf::Mouse::getPosition(main_window));
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left
@@ -130,9 +136,7 @@ int main()
                     selected_piece->get_descriptor().make_visible();                    
                     if (previous_piece != nullptr) {
                         previous_piece->get_descriptor().hide(); 
-                    }
-                    //current_piece_info.setString(player.get_piece_info(selected_piece));
-                    //edit_text(current_piece_info, sf::Color::Black, 18U, grid.get_position_vector2f(13, 0));
+                    }                    
                     if (game_state == action && selected_piece->get_owner() == player.get_id()) 
                     {
                         player.evaluate_actions(grid, selected_piece); 
@@ -147,6 +151,8 @@ int main()
                         player.attack_piece(previous_piece, selected_piece); 
                         playPieceSound(previous_piece, sounds_vector); 
                         remove_dead_pieces(grid, player1, player2);
+                        player1.update_average_hp(); 
+                        player2.update_average_hp(); 
                         player1.update_piece_descriptors(); 
                         player2.update_piece_descriptors(); 
                     }

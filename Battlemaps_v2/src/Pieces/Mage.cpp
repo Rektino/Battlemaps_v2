@@ -4,6 +4,10 @@ Mage::Mage(int player) : owner(player) {};
 
 const int Mage::get_hp() { return hp; }
 const int Mage::get_dmg() { return dmg; }
+const int Mage::get_max_hp()
+{
+	return max_hp;
+}
 void Mage::set_hp(int val) { hp = val; }
 void Mage::set_dmg(int val) { dmg = val; }
 

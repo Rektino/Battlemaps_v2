@@ -4,7 +4,8 @@
 #include "Grid.h"
 
 bool ESC_pressed(sf::Event&); 
-bool H_pressed(sf::Event&); 
+bool H_pressed(sf::Event&);
+bool E_pressed(sf::Event&); 
 
 bool DRAGGING_PIECE(sf::Event& event, Event_states& event_state, Grid& grid , int player_id);
 bool SELECTING_PIECE(sf::Event& event, Event_states& event_state);

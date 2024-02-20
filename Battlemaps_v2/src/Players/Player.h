@@ -28,7 +28,7 @@ enum Directions {
 class Player {
 public : 
 	Player() = delete; 
-	Player(int id , sf::RenderWindow& window , Grid& grid); 
+	Player(const std::string username , int id , sf::RenderWindow& window , Grid& grid); 
 	friend void randomize_pieces(sf::RenderTarget&, Grid& grid, Player&, Player&); 
 	void draw(sf::RenderTarget& window, Grid& grid); 
 	void evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece); 	
@@ -51,11 +51,14 @@ public :
 	std::shared_ptr<sf::Sprite> create_sprite(sf::Texture& texture); 
 	void create_pieces(); 
 	void place_pieces(Grid& grid); 
+	void place_descriptors(Grid& grid); 
 	const Dashboard& get_dashboard() { return m_dashboard; }
 	void update_dashboard_text(Grid& grid); 
+	void update_average_hp(); 
 	void update_piece_descriptors(); 
 	friend void remove_dead_pieces(Grid& grid, Player& player1, Player& player2);
 private : 
+	const std::string m_username; 
 	int m_id; 
 	Dashboard m_dashboard; 
 	bool locked_actions{ false }; 

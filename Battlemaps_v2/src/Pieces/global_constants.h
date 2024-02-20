@@ -31,15 +31,17 @@ constexpr float HP_BAR_SIZE_X = 5.0f;
 constexpr float HP_BAR_SIZE_Y = 30.0f;
 
 constexpr unsigned DEFAULT_CHAR_SIZE = 15; 
+constexpr unsigned DEFAULT_TITLES_SIZE = 40; 
 constexpr unsigned MENU_BTN_TEXT_SIZE = 45U;
 
 
 //File paths for fonts :
 
-const std::string font_paths[3] = {
+const std::string font_paths[4] = {
     "fonts/JosefinSans-SemiBold.ttf" ,
     "fonts/JosefinSans-Bold.ttf",
-    "fonts/life_is_goofy.ttf"
+    "fonts/life_is_goofy.ttf",
+    "fonts/CalligraphyFLF.ttf"
 };
 
 const std::string icons_texture_paths[2] = {

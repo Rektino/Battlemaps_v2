@@ -14,6 +14,13 @@ bool H_pressed(sf::Event& event) {
 	return false;
 }
 
+bool E_pressed(sf::Event& event) {
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::E) {
+		return true;
+	}
+	return false;
+}
+
 //returns true if the user is moving the mouse anywhere, and the event_state is 'neutral'
 bool MOUSE_HOVERING(sf::Event& event, Event_states& event_state) {
 	return ((event_state == neutral || event_state == hold_selection) &&

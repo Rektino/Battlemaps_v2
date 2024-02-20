@@ -6,15 +6,13 @@ piece_descriptor::piece_descriptor()
 	title_font.loadFromFile(font_paths[2]); 	
 	title_text.setCharacterSize(title_char_size); 
 	title_text.setFont(title_font); 
-	//title_text.setString(type); 
 	title_text.setFillColor(sf::Color::Black); 
-	title_text.setPosition(1300, 250); 
+	title_text.setPosition(1200, 250); 
 	description_text.setCharacterSize(description_char_size);
 	description_font.loadFromFile(font_paths[1]);
 	description_text.setFont(description_font); 
-	//description_text.setString(piece_description);
 	description_text.setFillColor(sf::Color::Black); 
-	description_text.setPosition(1300, 320); 
+	description_text.setPosition(1200, 320); 
 	outline_rectangle.setFillColor(sf::Color::Transparent); 
 	outline_rectangle.setOutlineColor(sf::Color::Magenta); 
 	outline_rectangle.setOutlineThickness(2.0f); 
@@ -25,7 +23,6 @@ piece_descriptor::piece_descriptor()
 
 void piece_descriptor::draw(sf::RenderTarget& window)
 {
-	std::cout << "Piece descriptor's draw() function called...\n";
 	if (!is_hidden) {
 		window.draw(title_text); 
 		window.draw(description_text); 
@@ -52,6 +49,15 @@ void piece_descriptor::set_all_text(const std::string piece_type, const std::str
 void piece_descriptor::set_sprite_view(sf::Sprite piece_sprite)
 {
 	m_sprite = piece_sprite;	
+}
+
+void piece_descriptor::set_position(sf::Vector2f position_vector2f)
+{
+	title_text.setPosition(position_vector2f); 
+	description_text.setPosition({ position_vector2f.x , position_vector2f.y + 70.0f }); 
+	outline_rectangle.setPosition(title_text.getPosition().x - 20.0f, title_text.getPosition().y - 20.0f);
+	m_sprite.setPosition({ title_text.getPosition().x + title_text.getGlobalBounds().width + 10.0f ,
+						  title_text.getPosition().y });
 }
 
 void piece_descriptor::make_visible()

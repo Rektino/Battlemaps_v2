@@ -7,6 +7,7 @@ public:
 	Healer() = delete;
 	Healer(int player);
 	const int get_hp() override;
+	const int get_max_hp() override;
 	const int get_dmg() override;
 	const int get_range() override { return range; }
 	const int get_owner() override { return owner; }
@@ -18,6 +19,7 @@ public:
 	static const std::string description;
 private:
 	int owner{};
+	const int max_hp{ HEALER_HP };
 	int hp{ HEALER_HP };
 	int dmg{ HEALER_DMG };
 	int range{ HEALER_RANGE };

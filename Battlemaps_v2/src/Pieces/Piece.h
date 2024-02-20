@@ -35,8 +35,10 @@ public:
 	int get_attacks_left() { return attacks_left; }
 	int get_moves_left() { return moves_left; }
 	bool effect_is_available() { return has_effect; }
+	void activate_effect(); 
 	virtual const int get_dmg() = 0;
 	virtual const int get_hp() = 0;
+	virtual const int get_max_hp() = 0; 
 	virtual const int get_range() = 0;
 	virtual const int get_owner() = 0;
 	virtual void set_hp(int val) = 0;
@@ -44,10 +46,12 @@ public:
 	virtual const std::string_view get_description() = 0;
 	virtual const std::string_view getType() = 0;
 	std::shared_ptr<const sf::Sprite> get_sprite() { return m_sprite;  }
+	piece_descriptor& get_descriptor() { return m_descriptor; }
+	void set_descriptor_position2f(sf::Vector2f new_position);
 	Piece& move(sf::Vector2f newPos, int posX, int posY);
 	void draw(sf::RenderTarget& window);	 
 	void draw_descriptor(sf::RenderTarget& window);
-	piece_descriptor& get_descriptor() {return m_descriptor;} 
+	
 private:
 	std::shared_ptr<sf::Sprite> m_sprite; 
 	piece_descriptor m_descriptor; 
@@ -55,7 +59,7 @@ private:
 	int moves_left{ 1 };
 	int attacks_left{ 1 };
 	bool has_effect{ true };
-	//int effect_turn_counter{} ;
+	int effect_turn_counter{} ;
 	sf::RectangleShape hp_bar{};
 	sf::RectangleShape hp_outter{};	
 };

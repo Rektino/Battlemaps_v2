@@ -7,6 +7,10 @@ Using all attacks and moves\nis not mandatory." };
 Warrior::Warrior(int player) : owner(player) {};
 
 const int Warrior::get_hp()  { return hp; }
+const int Warrior::get_max_hp()
+{
+	return max_hp;
+}
 const int Warrior::get_dmg() { return dmg; }
 void Warrior::set_hp(int val) { hp = val;  }
 void Warrior::set_dmg(int val) { dmg = val;  }

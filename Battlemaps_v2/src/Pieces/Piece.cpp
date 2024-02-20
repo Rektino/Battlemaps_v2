@@ -22,6 +22,12 @@ void Piece::setY(short int posy) { m_y = posy; }
 //==========================================================================
 const std::string_view Piece::getType() { return "Piece"; }
 
+void Piece::set_descriptor_position2f(sf::Vector2f new_position)
+{
+	std::cout << "Moving piece descriptor...\n"; 
+	m_descriptor.set_position(new_position); 
+}
+
 //==========================================================================	
 // Function to move a piece
 Piece& Piece::move(sf::Vector2f newPos, int posX, int posY) {
@@ -54,33 +60,10 @@ void Piece::draw_descriptor(sf::RenderTarget& window)
 // updates the hp bar rectangle size and color based on current HP and maximum hp of this piece
 void Piece::update_hp_bar()
 {
-	int max_hp{ 200 }, current_hp{ get_hp() };
+	int max_hp{ get_max_hp()};
+	int current_hp{ get_hp() };
 	float percentage;
-	std::string_view type = getType();
-	if (type == "Warrior") {
-		max_hp = WARRIOR_HP;
-	}
-	else if (type == "Archer") {
-		max_hp = ARCHER_HP;
-	}
-	else if (type == "Defender") {
-		max_hp = DEFENDER_HP;
-	}
-	else if (type == "Mage") {
-		max_hp = MAGE_HP;
-	}
-	else if (type == "Assassin") {
-		max_hp = ASSASSIN_HP;
-	}
-	else if (type == "Sniper") {
-		max_hp = SNIPER_HP;
-	}
-	else if (type == "Healer") {
-		max_hp = HEALER_HP;
-	}
-	else if (type == "Commander") {
-		max_hp = COMMANDER_HP;
-	}
+	std::string_view type = getType();	
 	percentage = static_cast<float>(current_hp) / static_cast<float>(max_hp);
 	if (percentage < 0.0) {
 		percentage = 0.0; 
@@ -116,4 +99,12 @@ void Piece::update_attacks_left(int attacks) {
 
 void Piece::toggle_effect() {
 	has_effect = !has_effect;
+}
+
+void Piece::activate_effect()
+{
+	const std::string_view piece_type = getType();
+	if (piece_type == "Warrior") {
+		//TODO : change actions & moves, set turn counter for the effect !
+	}
 }
