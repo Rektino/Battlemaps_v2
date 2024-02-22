@@ -137,9 +137,15 @@ std::shared_ptr<Piece> Grid::set_selected_piece(bool player1_turn, std::vector<i
 		}
 		selected_piece = nullptr;
 		return nullptr;
-	}
+	}	
 	previous_piece = selected_piece; 
 	selected_piece = piece_on_coords;
+	if (previous_piece != nullptr && selected_piece == previous_piece) {
+		std::cout << "Cancelling selection ---\n";
+		selected_piece = nullptr; 
+		previous_piece = nullptr; 
+		return nullptr; 
+	}
 	movement_start_coords = { selected_piece->getX() , selected_piece->getY() };
 	activate_particular_cell(coords);
 	return selected_piece;
@@ -163,7 +169,7 @@ std::shared_ptr<Piece> Grid::get_piece_on_cell(int x, int y)
 {
 	auto piece = map.at(x).at(y).getPiece();
 	if (piece == nullptr) {
-		std::cout << "-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n";
+		//std::cout << "-- Null piece returned from get_piece_on_cell(" << x << "," << y << ")\n";
 		return nullptr;
 	}
 	return piece;

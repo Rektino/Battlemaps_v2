@@ -16,6 +16,7 @@ public:
 	const std::string_view getType() override { return "Archer"; }
 	void set_hp(int val);
 	void set_dmg(int val);
+	void set_range(int val) override { range = val;  }
 	void set_owner(int player) { owner = player; }
 	static const std::string description; 
 private:

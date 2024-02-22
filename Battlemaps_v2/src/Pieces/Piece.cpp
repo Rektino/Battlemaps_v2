@@ -104,7 +104,30 @@ void Piece::toggle_effect() {
 void Piece::activate_effect()
 {
 	const std::string_view piece_type = getType();
+	this->has_effect = false; 
 	if (piece_type == "Warrior") {
-		//TODO : change actions & moves, set turn counter for the effect !
+		//TODO : change actions & moves, set turn counter for the effect !		
+		moves_left = 3; 
+		attacks_left = 3; 
+		effect_turn_counter = 1; 		
 	}
+	else if (piece_type == "Archer") {
+		set_range(ARCHER_RANGE + 1);
+		effect_turn_counter = 1; 
+	}
+	else if (piece_type == "Defender") {
+		effect_turn_counter = 2; 
+	}
+	else if (piece_type == "Sniper") {
+		set_range(SNIPER_RANGE + 2); 
+		effect_turn_counter = 1; 
+	}
+	else if (piece_type == "Healer") {
+		attacks_left = 3; 
+		effect_turn_counter = 1; 
+	}
+	else if (piece_type == "Commander") {
+		//todo
+	}
+
 }

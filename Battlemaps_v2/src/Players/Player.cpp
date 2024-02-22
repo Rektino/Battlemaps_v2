@@ -146,12 +146,12 @@ void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
 				available_moves.emplace_back(free_cell_coords);
 			}
 		}
-		std::cout << "DBG : -- Added available move cell : (" << posX << "," << posY << ") \n"; 
+		//std::cout << "DBG : -- Added available move cell : (" << posX << "," << posY << ") \n"; 
 	}
-	std::cout << "DBG : ALL AVAILABLE MOVES FOR THIS PIECE : \n"; 
+	/*std::cout << "DBG : ALL AVAILABLE MOVES FOR THIS PIECE : \n"; 
 	for (auto& moves : available_moves) {
 		std::cout << moves.at(0) << " , " << moves.at(1) << "\n"; 
-	}
+	}*/
 	//TODO : Evaluate available attacks : 
 	std::vector<int> target{}; 
 	int posX{}, posY{}; 
@@ -211,10 +211,10 @@ void Player::evaluate_actions(Grid& grid, std::shared_ptr<Piece> selected_piece)
 			}
 		}
 	}
-	std::cout << "DBG : ALL AVAILABLE ATTACKS FOR THIS PIECE : \n";
+	/*std::cout << "DBG : ALL AVAILABLE ATTACKS FOR THIS PIECE : \n";
 	for (auto& attack: available_attacks) {
 		std::cout << attack.at(0) << " , " << attack.at(1) << "\n";
-	}
+	}*/
 }
 
 void Player::drag_piece(std::shared_ptr<Piece> piece, sf::Vector2f mousePos_f, int x, int y, Grid& grid)
@@ -293,9 +293,7 @@ void Player::release_piece(Game_states game_state , std::shared_ptr<Piece> piece
 		}
 		break;
 	}
-	
-	//TODO  : Releasing piece on ACTION_STAGE of the game. Need to evaluate available moves etc
-	grid.clear_selected_piece(); 
+		grid.clear_selected_piece(); 
 }
 
 void Player::move_piece(std::shared_ptr<Piece> piece, int x, int y, Grid& grid)
@@ -520,8 +518,10 @@ void Player::update_average_hp()
 void Player::update_piece_descriptors()
 {
 	for (auto& piece : m_pieces) {
-		piece->get_descriptor().set_all_text( static_cast<std::string>(piece->getType()) , static_cast<std::string>(piece->get_description()),
-											piece->get_hp(), piece->get_dmg() , piece->get_attacks_left() , piece->get_moves_left());
+		piece->get_descriptor().
+			set_all_text( static_cast<std::string>(piece->getType()) , static_cast<std::string>(piece->get_description()),
+						piece->get_hp(), piece->get_dmg() , piece->get_attacks_left() , piece->get_moves_left() ,
+						piece->effect_is_available());
 	}
 }
 

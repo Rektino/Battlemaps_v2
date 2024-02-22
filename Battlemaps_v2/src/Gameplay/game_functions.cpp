@@ -39,3 +39,22 @@ void remove_dead_pieces(Grid& grid, Player& player1, Player& player2)
 		p2_pieces.end()); 
 	grid.remove_dead_from_grid(); 
 }
+
+void dbg_ShowSelectedAndPreviousPiece(Grid& grid)
+{
+	if (grid.get_selected_piece() == nullptr) {
+		std::cout << "SELECTED PIECE : NULLPTR\n";
+	}
+	else
+	{
+		std::cout << "SELECTED PIECE : " << grid.get_selected_piece()->getType() << " at " <<
+			grid.get_selected_piece()->getX() << " , " << grid.get_selected_piece()->getY() << "\n";
+	}
+	if (grid.get_previous_piece() == nullptr) {
+		std::cout << "PREVIOUS PIECE : NULLPTR\n";
+	}
+	else {
+		std::cout << "PREVIOUS PIECE : " << grid.get_previous_piece()->getType() << " at " <<
+			grid.get_previous_piece()->getX() << " , " << grid.get_previous_piece()->getY() << "\n";
+	}
+}

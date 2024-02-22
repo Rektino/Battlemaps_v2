@@ -7,18 +7,17 @@ piece_descriptor::piece_descriptor()
 	title_text.setCharacterSize(title_char_size); 
 	title_text.setFont(title_font); 
 	title_text.setFillColor(sf::Color::Black); 
-	title_text.setPosition(1200, 250); 
 	description_text.setCharacterSize(description_char_size);
 	description_font.loadFromFile(font_paths[1]);
 	description_text.setFont(description_font); 
 	description_text.setFillColor(sf::Color::Black); 
-	description_text.setPosition(1200, 320); 
+	effect_font.loadFromFile(font_paths[1]); 
+	effect_text.setCharacterSize(effect_char_size); 
+	effect_text.setFont(effect_font); 
+	effect_text.setFillColor(sf::Color(253, 93, 0)); 
 	outline_rectangle.setFillColor(sf::Color::Transparent); 
 	outline_rectangle.setOutlineColor(sf::Color::Magenta); 
-	outline_rectangle.setOutlineThickness(2.0f); 
-	outline_rectangle.setSize({ description_text.getGlobalBounds().width + 50.0f, 
-								description_text.getGlobalBounds().height + title_text.getGlobalBounds().height  + 90.0f});
-	outline_rectangle.setPosition(title_text.getPosition().x - 20.0f , title_text.getPosition().y - 20.0f); 
+	outline_rectangle.setOutlineThickness(2.0f); 	
 }
 
 void piece_descriptor::draw(sf::RenderTarget& window)
@@ -26,24 +25,24 @@ void piece_descriptor::draw(sf::RenderTarget& window)
 	if (!is_hidden) {
 		window.draw(title_text); 
 		window.draw(description_text); 
+		window.draw(effect_text); 
 		window.draw(outline_rectangle);
 		window.draw(m_sprite); 
 	}
 }
 
 void piece_descriptor::set_all_text(const std::string piece_type, const std::string piece_description,
-	const int hp, const int dmg, const int attacks_left, const int moves_left)
+	const int hp, const int dmg, const int attacks_left, const int moves_left , bool effect_available)
 {
 	title_text.setString(piece_type);
 	std::stringstream ss_all_data;
-	ss_all_data << piece_description << "\n\nHP : " << hp << "\nDMG : " << dmg << "\n---------------\n" << 
-		"Attacks left : " << attacks_left << "\nMoves left : " << moves_left <<"\n";
+	ss_all_data << piece_description << "\n\nHP : " << hp << "\nDMG : " << dmg << "\n---------------\n" <<
+		"Attacks left : " << attacks_left << "\nMoves left : " << moves_left << "\n" << "Effect available : "
+		<< (effect_available? "Yes\n" : "No\n") ;
 	auto all_details_str = ss_all_data.str();
 	description_text.setString(all_details_str);
-	outline_rectangle.setSize({ description_text.getGlobalBounds().width + 50.0f,
-								description_text.getGlobalBounds().height + title_text.getGlobalBounds().height + 90.0f });
-	m_sprite.setPosition({ title_text.getPosition().x + title_text.getGlobalBounds().width + 10.0f ,
-						  title_text.getPosition().y });
+	effect_text.setString("Activate effect : [E]"); 
+	
 }
 
 void piece_descriptor::set_sprite_view(sf::Sprite piece_sprite)
@@ -55,7 +54,12 @@ void piece_descriptor::set_position(sf::Vector2f position_vector2f)
 {
 	title_text.setPosition(position_vector2f); 
 	description_text.setPosition({ position_vector2f.x , position_vector2f.y + 70.0f }); 
+	effect_text.setPosition({ description_text.getPosition().x , 
+		description_text.getPosition().y + description_text.getGlobalBounds().height + 5.0f});
 	outline_rectangle.setPosition(title_text.getPosition().x - 20.0f, title_text.getPosition().y - 20.0f);
+	outline_rectangle.setSize({ description_text.getGlobalBounds().width + 50.0f,
+								description_text.getGlobalBounds().height + title_text.getGlobalBounds().height
+		+ effect_text.getGlobalBounds().height + 90.0f});
 	m_sprite.setPosition({ title_text.getPosition().x + title_text.getGlobalBounds().width + 10.0f ,
 						  title_text.getPosition().y });
 }

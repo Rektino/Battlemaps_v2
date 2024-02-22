@@ -104,7 +104,7 @@ int main()
             else if (E_pressed(event) && selected_piece != nullptr &&
                 selected_piece->get_owner() == player.get_id() && selected_piece->effect_is_available()) 
             {
-                selected_piece.activate_effect(); 
+                //selected_piece.activate_effect(); 
             }
             /* ACTIONS LOCK AND END TURN BUTTON POLLING*/
             std::vector<int> mouse_cell_i = grid.get_mouse_cell(main_window);            
@@ -123,12 +123,13 @@ int main()
                 break; 
             }
             /* MAIN GAME LOGIC EVENTS */            
-            else if (SELECTING_PIECE(event , event_state)) {                
+            else if (SELECTING_PIECE(event , event_state)) {  
                 std::cout << "@@ SELECTION @@\n";
                 auto piece_on_mouse = grid.get_piece_on_cell(mouse_cell_i);
                 if (grid.set_selected_piece(player1_turn, mouse_cell_i) != nullptr) {
                     auto selected_piece = grid.get_selected_piece(); 
                     auto previous_piece = grid.get_previous_piece(); 
+                    dbg_ShowSelectedAndPreviousPiece(grid);
                     event_state = Event_states::selected_piece; 
                     if (selected_piece->get_owner() == player.get_id()) {
                         playSound(Sounds::selection, sounds_vector);
@@ -163,7 +164,7 @@ int main()
                     playSound(Sounds::press_endturn, sounds_vector);
                    // current_piece_info.setString("");
                 }
-                else {
+                else { 
                     //current_piece_info.setString("");
                     auto prev_piece = grid.get_previous_piece(); 
                     bool is_move = (prev_piece != nullptr) && (prev_piece->get_owner() == player.get_id())

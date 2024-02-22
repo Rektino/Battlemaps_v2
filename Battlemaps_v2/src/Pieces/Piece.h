@@ -43,6 +43,7 @@ public:
 	virtual const int get_owner() = 0;
 	virtual void set_hp(int val) = 0;
 	virtual void set_dmg(int val) = 0;
+	virtual void set_range(int val) { } ;
 	virtual const std::string_view get_description() = 0;
 	virtual const std::string_view getType() = 0;
 	std::shared_ptr<const sf::Sprite> get_sprite() { return m_sprite;  }
